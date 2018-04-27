@@ -45,8 +45,7 @@ public abstract class Sprite {
     }
 
     public boolean collidesWith(Sprite other) {
-        boolean result = intersectionWith(other) != null;
-        return result;
+        return intersectionWith(other) != null;
     }
 
     /**

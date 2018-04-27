@@ -28,7 +28,23 @@ class World {
             handleMotionEvent(e);
         for(Sprite s: sprites)
             s.tick(dt);
+        resolveCollisions();
     }
+
+    private void resolveCollisions() {
+        ArrayList<Collision> collisions = new ArrayList<>();
+        for(int i=0; i < sprites.size()-1; i++)
+            for(int j=i+1; j < sprites.size(); j++) {
+                Sprite s1 = sprites.get(i);
+                Sprite s2 = sprites.get(j);
+
+                if (s1.collidesWith(s2))
+                    collisions.add(new Collision(s1, s2));
+            }
+
+        for(Collision c: collisions) c.resolve();
+    }
+
 
     /**
      * When the user touches the screen, this message is sent.  Probably you
