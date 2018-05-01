@@ -1,11 +1,9 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.bitmaps;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;

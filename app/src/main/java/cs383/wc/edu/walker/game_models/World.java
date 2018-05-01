@@ -1,19 +1,23 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.game_models;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class World {
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.sprites.AlienSprite;
+import cs383.wc.edu.walker.sprites.PlayerSprite;
+import cs383.wc.edu.walker.sprites.Sprite;
+
+public class World {
     private List<Sprite> sprites;
     private PlayerSprite player;
 
-    public World() {
+    World() {
         sprites = new ArrayList<>();
         sprites.add(player = new PlayerSprite(new Vec2d(100,1000)));
         sprites.add(new AlienSprite(new Vec2d(500, 100)));
@@ -22,7 +26,7 @@ class World {
         sprites.add(new AlienSprite(new Vec2d(700, 100)));
     }
 
-    public void tick(double dt) {
+    void tick(double dt) {
         MotionEvent e = TouchEventQueue.getInstance().dequeue();
         if (e != null)
             handleMotionEvent(e);
@@ -56,7 +60,7 @@ class World {
 
     }
 
-    public void draw(Canvas c) {
+    void draw(Canvas c) {
         Bitmap bg = BitmapRepo.getInstance().getImage(R.drawable.background);
         float x = player.getPosition().getX();
         c.translate(-x+100, 0);

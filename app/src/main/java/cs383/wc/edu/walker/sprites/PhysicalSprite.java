@@ -1,10 +1,10 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.sprites;
 
-import android.graphics.PointF;
-import android.util.Log;
+import cs383.wc.edu.walker.game_models.Vec2d;
 
 /**
  * Created by shaffer on 4/28/16.
+ * Edited by David Windsor and Alex Michels
  */
 public abstract class PhysicalSprite extends Sprite {
 

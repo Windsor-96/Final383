@@ -1,8 +1,7 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.game_models;
 
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**

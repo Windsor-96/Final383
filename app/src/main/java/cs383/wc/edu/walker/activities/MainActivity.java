@@ -1,5 +1,6 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.graphics.SurfaceTexture;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,11 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.game_models.RenderLoop;
+import cs383.wc.edu.walker.game_models.TouchEventQueue;
 
 public class MainActivity extends AppCompatActivity {
 

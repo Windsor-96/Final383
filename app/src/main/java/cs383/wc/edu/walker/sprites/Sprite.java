@@ -1,18 +1,21 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.sprites;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
+
+import cs383.wc.edu.walker.bitmaps.BitmapSequence;
+import cs383.wc.edu.walker.game_models.Collision;
+import cs383.wc.edu.walker.game_models.Vec2d;
 
 /**
  * Created by shaffer on 4/27/16.
+ * Edited by David Windsor and Alex Michels
  */
 public abstract class Sprite {
 
     private BitmapSequence bitmaps;
-    protected Vec2d position;
+    Vec2d position;
 
 
     public Sprite(Vec2d v) {
@@ -51,8 +54,8 @@ public abstract class Sprite {
     /**
      * Return null if I don't intersect with other, otherwise return the overlap of our two bounding boxes.
      *
-     * @param other
-     * @return
+     * @param other The other sprite we are checking for a collision with
+     * @return The box that is intersecting
      */
     public RectF intersectionWith(Sprite other) {
         RectF r = new RectF(getBoundingBox());
