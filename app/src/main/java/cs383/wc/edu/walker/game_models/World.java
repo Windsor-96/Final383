@@ -9,21 +9,21 @@ import java.util.List;
 
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.sprites.AlienSprite;
+import cs383.wc.edu.walker.sprites.BirdSprite;
 import cs383.wc.edu.walker.sprites.PlayerSprite;
 import cs383.wc.edu.walker.sprites.Sprite;
 
-public class World {
+class World {
     private List<Sprite> sprites;
     private PlayerSprite player;
 
     World() {
         sprites = new ArrayList<>();
         sprites.add(player = new PlayerSprite(new Vec2d(100,1000)));
-        sprites.add(new AlienSprite(new Vec2d(500, 100)));
-        sprites.add(new AlienSprite(new Vec2d(300, 100)));
-        sprites.add(new AlienSprite(new Vec2d(-200, 100)));
-        sprites.add(new AlienSprite(new Vec2d(700, 100)));
+        sprites.add(new BirdSprite(new Vec2d(500, 100)));
+        sprites.add(new BirdSprite(new Vec2d(300, 100)));
+        sprites.add(new BirdSprite(new Vec2d(-200, 100)));
+        sprites.add(new BirdSprite(new Vec2d(700, 100)));
     }
 
     void tick(double dt) {
@@ -57,7 +57,16 @@ public class World {
      * @param e the MotionEvent corresponding to the touch
      */
     private void handleMotionEvent(MotionEvent e) {
-
+        if(e.getAction() == MotionEvent.ACTION_DOWN) {
+            float eventY = e.getY();
+            float playerY = player.getY();
+            if(eventY > playerY)
+                player.moveDown();
+            else if(eventY < playerY)
+                player.moveUp();
+        }
+        else if(e.getAction() == MotionEvent.ACTION_UP)
+            player.levelOut();
     }
 
     void draw(Canvas c) {

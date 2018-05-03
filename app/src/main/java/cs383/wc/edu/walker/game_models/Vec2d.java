@@ -4,6 +4,7 @@ import android.graphics.PointF;
 
 /**
  * Created by shaffer on 4/28/16.
+ * Edited by David Windsor
  */
 public class Vec2d {
     private PointF coordinates;
@@ -30,5 +31,9 @@ public class Vec2d {
     @Override
     public String toString() {
         return "("+getX()+","+getY()+")";
+    }
+
+    public void setY(float newY) {
+        coordinates.set(coordinates.x, newY);
     }
 }
