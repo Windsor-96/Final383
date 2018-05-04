@@ -41,6 +41,7 @@ public class World {
             sprites.add(new BirdSprite(new Vec2d(player.getX() + 2000, player.getY()), this));
             tickCounter = 0;
         }
+        //TODO getting a ConcurrentModificationException here
         for(Sprite s: sprites)
             s.tick(dt);
         resolveCollisions();
