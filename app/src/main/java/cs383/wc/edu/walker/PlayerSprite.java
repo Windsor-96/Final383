@@ -1,10 +1,4 @@
-package cs383.wc.edu.walker.sprites;
-
-import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.bitmaps.BitmapRepo;
-import cs383.wc.edu.walker.bitmaps.BitmapSequence;
-import cs383.wc.edu.walker.game_models.Collision;
-import cs383.wc.edu.walker.game_models.Vec2d;
+package cs383.wc.edu.walker;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class PlayerSprite extends Sprite {

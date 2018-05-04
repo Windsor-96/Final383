@@ -1,4 +1,4 @@
-package cs383.wc.edu.walker.activities;
+package cs383.wc.edu.walker;
 
 import android.support.v7.app.AppCompatActivity;
 

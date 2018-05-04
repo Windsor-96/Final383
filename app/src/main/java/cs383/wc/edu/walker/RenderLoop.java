@@ -1,9 +1,7 @@
-package cs383.wc.edu.walker.game_models;
+package cs383.wc.edu.walker;
 
 import android.graphics.Canvas;
 import android.view.TextureView;
-
-import cs383.wc.edu.walker.game_models.World;
 
 public class RenderLoop implements Runnable {
     private static final int FPS = 30;

@@ -1,4 +1,4 @@
-package cs383.wc.edu.walker.game_models;
+package cs383.wc.edu.walker;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -6,12 +6,6 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cs383.wc.edu.walker.bitmaps.BitmapRepo;
-import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.sprites.BirdSprite;
-import cs383.wc.edu.walker.sprites.PlayerSprite;
-import cs383.wc.edu.walker.sprites.Sprite;
 
 class World {
     private List<Sprite> sprites;

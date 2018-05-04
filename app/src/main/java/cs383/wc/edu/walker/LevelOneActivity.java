@@ -1,27 +1,22 @@
-package cs383.wc.edu.walker.activities;
-
-import android.annotation.SuppressLint;
+package cs383.wc.edu.walker;
 import android.app.ActionBar;
-import android.content.Intent;
 import android.graphics.SurfaceTexture;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.Button;
 
-import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.game_models.RenderLoop;
-import cs383.wc.edu.walker.game_models.TouchEventQueue;
+import cs383.wc.edu.walker.BitmapRepo;
+import cs383.wc.edu.walker.RenderLoop;
+import cs383.wc.edu.walker.TouchEventQueue;
 
-public class MainActivity extends AppCompatActivity {
-
+public class LevelOneActivity extends AppCompatActivity
+{
     private TextureView textureView;
     private Thread renderLoopThread;
-    private Button levelOneButton;
-    private Button levelTwoButton;
+    private World world;
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
 
@@ -70,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BitmapRepo.getInstance().setContext(this);
+        world = new World();
         textureView = findViewById(R.id.texture_view);
         textureView.setSurfaceTextureListener(textureListener);
         textureView.setOnTouchListener(new View.OnTouchListener() {
@@ -80,29 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        levelOneButton = findViewById(R.id.main_level_one_button);
-        levelOneButton.setOnClickListener(new View.OnClickListener()
-                                          {
-                                              @Override
-                                              public void onClick(View view)
-                                              {
-
-                                                  startActivity(new Intent(MainActivity.this, LevelOneActivity.class));
-                                              }
-                                          }
-        );
-
-        levelTwoButton = findViewById(R.id.main_level_two_button);
-        levelTwoButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-
-                    startActivity(new Intent(MainActivity.this, LevelTwoActivity.class));
-                }
-            }
-        );
         goFullScreen();
     }
 
@@ -117,5 +90,4 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.hide();
     }
-
 }

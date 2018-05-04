@@ -1,4 +1,4 @@
-package cs383.wc.edu.walker.bitmaps;
+package cs383.wc.edu.walker;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
