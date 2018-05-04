@@ -1,16 +1,18 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.game_models;
 
 import android.graphics.Canvas;
 import android.view.TextureView;
+
+import cs383.wc.edu.walker.game_models.World;
 
 public class RenderLoop implements Runnable {
     private static final int FPS = 30;
     private final World world;
     private final TextureView textureView;
 
-    public RenderLoop(TextureView textureView, World world) {
+    public RenderLoop(TextureView textureView) {
         this.textureView = textureView;
-        this.world = world;
+        world = new World();
     }
 
     @Override
@@ -27,8 +29,7 @@ public class RenderLoop implements Runnable {
     }
 
     private void delay() throws InterruptedException {
-        //I doubled this so we could run it
-        Thread.sleep((long)(1.0/FPS * 2000));
+        Thread.sleep((long)(1.0/FPS * 1000));
     }
 
     private void drawWorld() {

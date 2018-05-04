@@ -1,4 +1,4 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.game_models;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,17 +7,21 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.sprites.BirdSprite;
+import cs383.wc.edu.walker.sprites.PlayerSprite;
+import cs383.wc.edu.walker.sprites.Sprite;
+
 class World {
     private List<Sprite> sprites;
     private PlayerSprite player;
 
     World() {
         sprites = new ArrayList<>();
-        sprites.add(player = new PlayerSprite(new Vec2d(100,1000)));
+        sprites.add(player = new PlayerSprite(new Vec2d(100, 500)));
         sprites.add(new BirdSprite(new Vec2d(500, 100)));
-        sprites.add(new BirdSprite(new Vec2d(300, 100)));
-        sprites.add(new BirdSprite(new Vec2d(-200, 100)));
-        sprites.add(new BirdSprite(new Vec2d(700, 100)));
+
     }
 
     void tick(double dt) {
@@ -52,11 +56,11 @@ class World {
      */
     private void handleMotionEvent(MotionEvent e) {
         if(e.getAction() == MotionEvent.ACTION_DOWN) {
-            float eventY = e.getY();
-            float playerY = player.getY();
-            if(eventY > playerY)
+            float eventX = e.getX();
+            float playerX = player.getX();
+            if(eventX < playerX)
                 player.moveDown();
-            else if(eventY < playerY)
+            else if(eventX > playerX)
                 player.moveUp();
         }
         else if(e.getAction() == MotionEvent.ACTION_UP)

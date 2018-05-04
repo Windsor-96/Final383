@@ -1,11 +1,17 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.sprites;
+
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.bitmaps.BitmapSequence;
+import cs383.wc.edu.walker.game_models.Collision;
+import cs383.wc.edu.walker.game_models.Vec2d;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class PlayerSprite extends Sprite {
 
-    private static int VELOCITY = 30;
-    private static float UP_ACCELERATION = 5;
-    private static float DOWN_ACCELERATION = -5;
+    private static int VELOCITY = 300;
+    private static float UP_ACCELERATION = 500;
+    private static float DOWN_ACCELERATION = -500;
     private boolean dead;
     private BitmapSequence deadSequence;
     private Vec2d acceleration;
@@ -56,8 +62,8 @@ public class PlayerSprite extends Sprite {
 
     @Override
     public void resolve(Collision collision, Sprite other) {
-        VELOCITY = 0;
         if (other instanceof BirdSprite && !((BirdSprite) other).isDead()) {
+            VELOCITY = 0;
             if (!dead) makeDead();
             ((BirdSprite) other).makeDead();
         }
@@ -72,8 +78,8 @@ public class PlayerSprite extends Sprite {
 
     public void addTimeSurvived(int time) { points += time;}
 
-    public float getY() {
-        return getPosition().getY();
+    public float getX() {
+        return getPosition().getX();
     }
 
     public void moveUp() {

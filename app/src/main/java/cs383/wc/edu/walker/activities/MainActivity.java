@@ -1,6 +1,6 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.activities;
+
 import android.app.ActionBar;
-import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +9,12 @@ import android.view.TextureView;
 import android.view.View;
 
 import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.BitmapRepo;
-import cs383.wc.edu.walker.RenderLoop;
-import cs383.wc.edu.walker.TouchEventQueue;
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.game_models.RenderLoop;
+import cs383.wc.edu.walker.game_models.TouchEventQueue;
 
-public class LevelOneActivity extends AppCompatActivity
-{
+public class MainActivity extends AppCompatActivity {
+
     private TextureView textureView;
     private Thread renderLoopThread;
 
@@ -55,7 +55,7 @@ public class LevelOneActivity extends AppCompatActivity
     }
 
     private void startThreads() {
-        RenderLoop renderLoop = new RenderLoop(textureView, new LevelOneWorld());
+        RenderLoop renderLoop = new RenderLoop(textureView);
         renderLoopThread = new Thread(renderLoop);
         renderLoopThread.start();
     }
@@ -63,9 +63,9 @@ public class LevelOneActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_one_level);
+        setContentView(R.layout.activity_main);
         BitmapRepo.getInstance().setContext(this);
-        textureView = findViewById(R.id.level_one_textureview);
+        textureView = findViewById(R.id.texture_view);
         textureView.setSurfaceTextureListener(textureListener);
         textureView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -74,11 +74,8 @@ public class LevelOneActivity extends AppCompatActivity
                 return true;
             }
         });
-
         goFullScreen();
     }
-
-
 
     // See https://developer.android.com/training/system-ui/status
     private void goFullScreen() {
@@ -91,4 +88,5 @@ public class LevelOneActivity extends AppCompatActivity
         ActionBar actionBar = getActionBar();
         if (actionBar != null) actionBar.hide();
     }
+
 }

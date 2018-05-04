@@ -1,8 +1,8 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.game_models;
 
 import android.graphics.RectF;
 
-import cs383.wc.edu.walker.Sprite;
+import cs383.wc.edu.walker.sprites.Sprite;
 
 /**
  * Created by shaffer on 4/28/16.

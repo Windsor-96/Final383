@@ -1,5 +1,12 @@
-package cs383.wc.edu.walker;
+package cs383.wc.edu.walker.sprites;
 
+
+
+
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.bitmaps.BitmapSequence;
+import cs383.wc.edu.walker.game_models.Vec2d;
 
 /**
  *
