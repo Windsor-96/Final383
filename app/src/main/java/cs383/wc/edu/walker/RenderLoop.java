@@ -8,9 +8,9 @@ public class RenderLoop implements Runnable {
     private final World world;
     private final TextureView textureView;
 
-    public RenderLoop(TextureView textureView) {
+    public RenderLoop(TextureView textureView, World world) {
         this.textureView = textureView;
-        world = new World();
+        this.world = world;
     }
 
     @Override
@@ -27,7 +27,8 @@ public class RenderLoop implements Runnable {
     }
 
     private void delay() throws InterruptedException {
-        Thread.sleep((long)(1.0/FPS * 1000));
+        //I doubled this so we could run it
+        Thread.sleep((long)(1.0/FPS * 2000));
     }
 
     private void drawWorld() {

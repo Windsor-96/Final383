@@ -1,5 +1,6 @@
 package cs383.wc.edu.walker;
 import android.app.ActionBar;
+import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,6 @@ public class LevelOneActivity extends AppCompatActivity
 {
     private TextureView textureView;
     private Thread renderLoopThread;
-    private World world;
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
 
@@ -55,7 +55,7 @@ public class LevelOneActivity extends AppCompatActivity
     }
 
     private void startThreads() {
-        RenderLoop renderLoop = new RenderLoop(textureView);
+        RenderLoop renderLoop = new RenderLoop(textureView, new LevelOneWorld());
         renderLoopThread = new Thread(renderLoop);
         renderLoopThread.start();
     }
@@ -63,10 +63,9 @@ public class LevelOneActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_one_level);
         BitmapRepo.getInstance().setContext(this);
-        world = new World();
-        textureView = findViewById(R.id.texture_view);
+        textureView = findViewById(R.id.level_one_textureview);
         textureView.setSurfaceTextureListener(textureListener);
         textureView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -78,6 +77,8 @@ public class LevelOneActivity extends AppCompatActivity
 
         goFullScreen();
     }
+
+
 
     // See https://developer.android.com/training/system-ui/status
     private void goFullScreen() {
