@@ -1,6 +1,7 @@
 package cs383.wc.edu.walker.activities;
 
 import android.app.ActionBar;
+import android.content.res.Resources;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import cs383.wc.edu.walker.game_models.RenderLoop;
 import cs383.wc.edu.walker.game_models.TouchEventQueue;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels;
+    public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
 
     private TextureView textureView;
     private Thread renderLoopThread;

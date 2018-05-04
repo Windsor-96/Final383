@@ -1,20 +1,23 @@
 package cs383.wc.edu.walker.sprites;
 
+import cs383.wc.edu.walker.activities.MainActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.game_models.Vec2d;
+import cs383.wc.edu.walker.game_models.World;
 
 public class BirdSprite extends Sprite {
-
-    private static final int velocityX = 0;
-    private static int velocityY = 0;
+    private World world;
+    private int velocityX = -20;
+    private int velocityY = 0;
     private boolean isDead;
     private BitmapSequence deadSequence;
 
 
-    public BirdSprite(Vec2d p) {
+    public BirdSprite(Vec2d p, World w) {
         super(p);
+        world = w;
         loadBitmaps();
         isDead = false;
 
@@ -34,18 +37,22 @@ public class BirdSprite extends Sprite {
 
     }
 
-    boolean isDead() {return isDead;}
+    boolean isDead() {
+        return isDead;
+    }
 
     @Override
     public void tick(double dt) {
         super.tick(dt);
         setPosition(getPosition().add(new Vec2d(velocityX*dt,velocityY*dt)));
+        if(getPosition().getY() > MainActivity.HEIGHT && isDead())
+            world.removeBird(this);
     }
 
     void makeDead() {
         isDead = true;
         setBitmaps(deadSequence);
-        velocityY = 20;
+        velocityY = 300;
     }
 
     @Override

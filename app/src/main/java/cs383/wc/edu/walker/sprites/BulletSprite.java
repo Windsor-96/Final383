@@ -12,7 +12,7 @@ import cs383.wc.edu.walker.game_models.Vec2d;
 
 public class BulletSprite extends PhysicalSprite {
     private PlayerSprite owner;
-    private static final float VELOCITY = 20f;
+    private static final float VELOCITY = 400f;
 
     public BulletSprite(Vec2d v, PlayerSprite owner) {
         super(v);
@@ -33,7 +33,7 @@ public class BulletSprite extends PhysicalSprite {
         super.resolve(collision, other);
         if (other instanceof BirdSprite) {
             ((BirdSprite) other).makeDead();
-            owner.onBirdHit();
+            owner.onBirdHit(this);
         }
     }
 }

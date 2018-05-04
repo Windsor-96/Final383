@@ -36,4 +36,6 @@ public class Vec2d {
     public void setY(float newY) {
         coordinates.set(coordinates.x, newY);
     }
+
+
 }
