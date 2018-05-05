@@ -46,7 +46,7 @@ public class BirdSprite extends Sprite {
         super.tick(dt);
         setPosition(getPosition().add(new Vec2d(velocityX*dt,velocityY*dt)));
         if(getPosition().getY() > MainActivity.HEIGHT && isDead())
-            world.removeBird(this);
+            world.removeSprite(this);
     }
 
     void makeDead() {

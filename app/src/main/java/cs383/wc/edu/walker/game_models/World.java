@@ -5,13 +5,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.hardware.SensorEvent;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.activities.MainActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.game_models.Collision;
 import cs383.wc.edu.walker.game_models.Vec2d;
@@ -21,31 +25,54 @@ import cs383.wc.edu.walker.sprites.PlayerSprite;
 import cs383.wc.edu.walker.sprites.Sprite;
 
 public class World {
+    //The rate of shots is 1/BULLET_RATE ticks
+    private static int BULLET_RATE = 45;
     private List<Sprite> sprites;
     private PlayerSprite player;
-    private int tickCounter;
+    private int tickCounter, shotCounter;
 
-    public World() {
+    /**
+     * The remove queue exists to avoid ConcurrentModificationExceptions caused by removing a sprite
+     * from the sprite list while we're iterating through it
+     * whenever a sprite needs taken off it will put itself on the queue, and then once we are done iterating
+     * we will remove all sprites in the queue
+     * IF THIS IS REMOVED WE WILL GET THAT EXCEPTION ANYTIME A BULLET OR BIRD ATTEMPTS TO REMOVE ITSELF
+     */
+    private PriorityQueue<Sprite> removeQueue;
+    private MainActivity activity;
+
+    /**
+     *
+     * @param mainActivity the activity hosting the world
+     *                     This is required for sound since we need a context to play a sound, or at least I haven't found another way
+     */
+    public World(MainActivity mainActivity) {
         sprites = new ArrayList<>();
         sprites.add(player = new PlayerSprite(new Vec2d(960,540), this));
         sprites.add(new BirdSprite(new Vec2d(2000, 540), this));
-        tickCounter = 0;
+        removeQueue = new PriorityQueue<>();
+        tickCounter = shotCounter = 0;
+        activity = mainActivity;
     }
 
     public void tick(double dt) {
         grabTouchEvents();
         grabRotationEvents();
         ++tickCounter;
-        if(tickCounter == 45) {
-            sprites.add(new BulletSprite(new Vec2d(player.getX() + 30, player.getY() + 30), player));
+        if(tickCounter == BULLET_RATE) {
+            sprites.add(new BulletSprite(new Vec2d(player.getX() + 30, player.getY() + 30), player, this));
+            //TODO remove this line when we get pre-generated maps
             sprites.add(new BirdSprite(new Vec2d(player.getX() + 2000, player.getY()), this));
             tickCounter = 0;
+
         }
-        //TODO getting a ConcurrentModificationException here
         for(Sprite s: sprites)
             s.tick(dt);
         resolveCollisions();
-
+        if(!removeQueue.isEmpty()) {
+            sprites.removeAll(removeQueue);
+            removeQueue.clear();
+        }
     }
 
     private void grabRotationEvents() {
@@ -81,6 +108,7 @@ public class World {
             }
 
         for(Collision c: collisions) c.resolve();
+
     }
 
 
@@ -114,11 +142,12 @@ public class World {
             s.draw(c);
     }
 
-    public void removeBullet(BulletSprite bullet) {
-        sprites.remove(bullet);
+    public void removeSprite(Sprite sprite) {
+        removeQueue.add(sprite);
     }
 
-    public void removeBird(BirdSprite birdSprite) {
-        sprites.remove(birdSprite);
+    public void playMedia(int resource) {
+        activity.playMedia(resource);
     }
+
 }

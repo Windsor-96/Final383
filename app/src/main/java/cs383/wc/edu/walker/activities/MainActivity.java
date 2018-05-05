@@ -3,6 +3,8 @@ package cs383.wc.edu.walker.activities;
 import android.app.ActionBar;
 import android.content.res.Resources;
 import android.graphics.SurfaceTexture;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -17,6 +19,7 @@ import cs383.wc.edu.walker.game_models.TouchEventQueue;
 public class MainActivity extends AppCompatActivity {
     public static final int WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels;
     public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
+
 
     private TextureView textureView;
     private Thread renderLoopThread;
@@ -58,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startThreads() {
-        RenderLoop renderLoop = new RenderLoop(textureView);
+
+        RenderLoop renderLoop = new RenderLoop(textureView, this);
         renderLoopThread = new Thread(renderLoop);
         renderLoopThread.start();
     }
@@ -77,6 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        //TODO make the music here and play it, we can change the music but for now you're stuck with Kenny Loggins,
+        MediaPlayer DANGER_ZONE = MediaPlayer.create(this, R.raw.danger_zone);
+        DANGER_ZONE.setLooping(true);
+        DANGER_ZONE.start();
         goFullScreen();
     }
 
@@ -92,4 +100,12 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) actionBar.hide();
     }
 
+    public void playMedia(int resource) {
+        MediaPlayer.create(this, resource).start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }

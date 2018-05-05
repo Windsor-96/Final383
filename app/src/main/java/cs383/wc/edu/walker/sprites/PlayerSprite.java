@@ -74,6 +74,13 @@ public class PlayerSprite extends Sprite {
             if (!dead) makeDead();
             ((BirdSprite) other).makeDead();
         }
+        else if(other instanceof BoostSprite) {
+            //we only have one boost so we're just gonna tell the boost to remove itself, and then tell the world to boost us
+            world.removeSprite(other);
+            //Is it ridiculous to casually double the player's points? Probably
+            //But it's also straight forward and gives the player other things to do then shoot at twitter birds
+            points *= 2;
+        }
     }
 
     private void makeDead() {
@@ -108,6 +115,6 @@ public class PlayerSprite extends Sprite {
 
     void onBirdHit(BulletSprite bullet) {
         points += 10;
-        world.removeBullet(bullet);
+        world.removeSprite(bullet);
     }
 }

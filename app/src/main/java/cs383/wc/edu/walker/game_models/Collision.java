@@ -6,6 +6,7 @@ import cs383.wc.edu.walker.sprites.Sprite;
 
 /**
  * Created by shaffer on 4/28/16.
+ *
  */
 public class Collision {
     private Sprite sprite1;
