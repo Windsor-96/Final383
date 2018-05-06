@@ -3,6 +3,7 @@ package cs383.wc.edu.walker;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.view.TextureView;
+import android.widget.TextView;
 
 public class RenderLoop implements Runnable {
     private static final int FPS = 30;
@@ -28,8 +29,7 @@ public class RenderLoop implements Runnable {
     }
 
     private void delay() throws InterruptedException {
-        //I doubled this so we could run it
-        Thread.sleep((long)(1.0/FPS * 2000));
+        Thread.sleep((long)(1.0/FPS * 1000));
     }
 
     private void drawWorld() {

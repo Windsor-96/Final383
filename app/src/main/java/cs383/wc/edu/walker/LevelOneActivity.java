@@ -1,5 +1,6 @@
 package cs383.wc.edu.walker;
 import android.app.ActionBar;
+import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.TextView;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.BitmapRepo;
@@ -24,6 +26,7 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
     private Thread renderLoopThread;
     private SensorManager mSensorManager;
     private Sensor mSensor;
+    private TextView pointsText;
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
 
@@ -45,7 +48,7 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
 
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-
+            pointsText.setText(world.getPlayer().getPoints()+"");
         }
     };
 
@@ -70,9 +73,12 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_one_level);
         BitmapRepo.getInstance().setContext(this);
         world = new LevelOneWorld();
+        pointsText = findViewById(R.id.level_one_points);
+        pointsText.setText(0+"");
         textureView = findViewById(R.id.level_one_textureview);
         textureView.setSurfaceTextureListener(textureListener);
         textureView.setOnTouchListener(new View.OnTouchListener() {
@@ -84,36 +90,34 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
         });
 
         mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
         goFullScreen();
     }
 
     @Override
     public void onSensorChanged(SensorEvent e)
     {
-        double x = e.values[0];
-        double y = e.values[1];
-
-        if (Math.abs(x) > Math.abs(y))
-        {
-            //I think I calculated this to be 10 degrees using their formula?
-            if (x < -0.09)
-            {
-                //tilting right
-                world.goUp();
-            }
-            else if (x > 0.09)
-            {
-                //tilting left
-                world.goDown();
-            }
-        }
+       SensorEventQueue.getInstance().enqueue(e);
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy)
     {
 
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
 

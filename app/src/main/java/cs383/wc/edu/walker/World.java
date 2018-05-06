@@ -2,6 +2,8 @@ package cs383.wc.edu.walker;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.hardware.SensorEvent;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ abstract class World {
         MotionEvent e = TouchEventQueue.getInstance().dequeue();
         if (e != null)
             handleMotionEvent(e);
+        grabRotationEvents();
         for(Sprite s: sprites)
             s.tick(dt);
         resolveCollisions();
@@ -37,6 +40,33 @@ abstract class World {
             }
 
         for(Collision c: collisions) c.resolve();
+    }
+
+    private void grabRotationEvents()
+    {
+        SensorEvent e = SensorEventQueue.getInstance().dequeue();
+        while (e != null)
+        {
+            handleSensorEvent(e);
+            e = SensorEventQueue.getInstance().dequeue();
+        }
+    }
+
+    private void handleSensorEvent(SensorEvent e)
+    {
+        Log.d("Accelerometer", "x: " + e.values[0] + "y: " + e.values[1] + "z: " + e.values[2]);
+        //10 degrees
+        if (Math.abs(e.values[2]) > .09)
+        {
+            if (e.values[2] < 0)
+            {
+                goUp();
+            }
+            else
+            {
+                goDown();
+            }
+        }
     }
 
 
@@ -89,12 +119,12 @@ abstract class World {
     void goUp()
     {
         Vec2d pos = player.getPosition();
-        pos.setY(pos.getY()+5);
+        pos.setY(pos.getY()+15);
     }
 
     void goDown()
     {
         Vec2d pos = player.getPosition();
-        pos.setY(pos.getY()-5);
+        pos.setY(pos.getY()-15);
     }
 }

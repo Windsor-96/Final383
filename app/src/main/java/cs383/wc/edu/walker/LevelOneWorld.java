@@ -17,7 +17,7 @@ class LevelOneWorld extends World
         Bitmap bg = BitmapRepo.getInstance().getImage(R.drawable.background);
         midPoint = bg.getHeight()/2.0;
         screenLength = bg.getWidth();
-        setPlayer(new PlayerSprite(new Vec2d(0,300)));
+        setPlayer(new PlayerSprite(new Vec2d(50,300)));
         addSprite(getPlayer());
         addSprite(new BirdSprite(new Vec2d(2000, 300)));
         addSprite(new BirdSprite(new Vec2d(2000, 450)));
