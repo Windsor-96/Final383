@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import cs383.wc.edu.walker.R;
@@ -117,12 +118,14 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
     protected void onResume()
     {
         super.onResume();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
 
     // See https://developer.android.com/training/system-ui/status
-    private void goFullScreen() {
+    private void goFullScreen()
+    {
         View decorView = getWindow().getDecorView();
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;

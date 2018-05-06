@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         );
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
 }
