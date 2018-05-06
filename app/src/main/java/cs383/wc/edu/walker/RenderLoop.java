@@ -1,6 +1,7 @@
 package cs383.wc.edu.walker;
 
 import android.graphics.Canvas;
+import android.hardware.Sensor;
 import android.view.TextureView;
 
 public class RenderLoop implements Runnable {

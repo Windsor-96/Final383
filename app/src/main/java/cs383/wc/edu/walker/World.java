@@ -7,17 +7,13 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-class World {
+abstract class World {
     private List<Sprite> sprites;
     private PlayerSprite player;
 
-    World() {
+    World()
+    {
         sprites = new ArrayList<>();
-        sprites.add(player = new PlayerSprite(new Vec2d(100,1000)));
-        sprites.add(new BirdSprite(new Vec2d(500, 100)));
-        sprites.add(new BirdSprite(new Vec2d(300, 100)));
-        sprites.add(new BirdSprite(new Vec2d(-200, 100)));
-        sprites.add(new BirdSprite(new Vec2d(700, 100)));
     }
 
     void tick(double dt) {
@@ -73,5 +69,32 @@ class World {
         c.drawBitmap(bg, bg.getWidth()*(backgroundNumber+1), 0,  null);
         for(Sprite s: sprites)
             s.draw(c);
+    }
+
+    void addSprite(Sprite s)
+    {
+        sprites.add(s);
+    }
+
+    void setPlayer(PlayerSprite p)
+    {
+        player = p;
+    }
+
+    PlayerSprite getPlayer()
+    {
+        return player;
+    }
+
+    void goUp()
+    {
+        Vec2d pos = player.getPosition();
+        pos.setY(pos.getY()+5);
+    }
+
+    void goDown()
+    {
+        Vec2d pos = player.getPosition();
+        pos.setY(pos.getY()-5);
     }
 }
