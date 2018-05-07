@@ -43,44 +43,11 @@ public class World {
      * @param gameActivity the activity hosting the world
      *                     This is required for sound since we need a context to play a sound, or at least I haven't found another way
      */
-    World(GameActivity gameActivity) {
+    World(GameActivity gameActivity)
+    {
         sprites = new ArrayList<>();
         activity = gameActivity;
         isGameOver = false;
-        sprites.add(player = new PlayerSprite(new Vec2d(960, 540), this));
-
-        if (gameActivity instanceof LevelOneActivity) {
-            sprites.add(new BirdSprite(new Vec2d(2000, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2000*1.8, 450), this));
-            sprites.add(new BoostSprite(new Vec2d(2200*1.8, 900)));
-            sprites.add(new BirdSprite(new Vec2d(1800*1.8, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(3000*1.8, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 300), this));
-            sprites.add(new BoostSprite(new Vec2d(3500, 100)));
-            sprites.add(new BirdSprite(new Vec2d(3800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(4000, 150), this));
-            sprites.add(new BirdSprite(new Vec2d(4200, 450), this));
-
-        } else if (gameActivity instanceof LevelTwoActivity) {
-            sprites.add(new BirdSprite(new Vec2d(2000, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2000, 450), this));
-            sprites.add(new BoostSprite(new Vec2d(2200, 900)));
-            sprites.add(new BirdSprite(new Vec2d(1800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 200), this));
-            sprites.add(new BirdSprite(new Vec2d(3000, 500), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 100), this));
-            sprites.add(new BoostSprite(new Vec2d(2500, 100)));
-            sprites.add(new BirdSprite(new Vec2d(3800, 700), this));
-            sprites.add(new BirdSprite(new Vec2d(4000, 850), this));
-            sprites.add(new BirdSprite(new Vec2d(4200, 450), this));
-            sprites.add(new BirdSprite(new Vec2d(1800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 200), this));
-            sprites.add(new BirdSprite(new Vec2d(3000, 500), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 100), this));
-        }
-
-        sprites.add(new BirdSprite(new Vec2d(2000, 540), this));
         removeQueue = new PriorityQueue<>();
 
     }
@@ -125,26 +92,33 @@ public class World {
         }
     }
 
-    private void grabRotationEvents() {
+    private void grabRotationEvents()
+    {
         SensorEvent e = SensorEventQueue.getInstance().dequeue();
-        while (e != null) {
+        while (e != null)
+        {
             handleSensorEvent(e);
             e = SensorEventQueue.getInstance().dequeue();
         }
     }
 
-    private void handleSensorEvent(SensorEvent e) {
+    private void handleSensorEvent(SensorEvent e)
+    {
         Log.d("Accelerometer", "x: " + e.values[0] + "y: " + e.values[1] + "z: " + e.values[2]);
-        if (Math.abs(e.values[2]) > .07) {
-            if (e.values[2] < 0) {
-                player.moveUp();
-            } else {
-                player.moveDown();
+        //10 degrees
+        if (Math.abs(e.values[2]) > .09)
+        {
+            if (e.values[2] < 0)
+            {
+                goUp();
             }
-        } else {
-            player.moveStraight();
+            else
+            {
+                goDown();
+            }
         }
     }
+
 
     private void resolveCollisions() {
         ArrayList<Collision> collisions = new ArrayList<>();
@@ -210,5 +184,32 @@ public class World {
 
     public void onPlayerDeath() {
         isGameOver = true;
+    }
+
+    void addSprite(Sprite s)
+    {
+        sprites.add(s);
+    }
+
+    void setPlayer(PlayerSprite p)
+    {
+        player = p;
+    }
+
+    PlayerSprite getPlayer()
+    {
+        return player;
+    }
+
+    void goUp()
+    {
+        Vec2d pos = player.getPosition();
+        pos.setY(pos.getY()+15);
+    }
+
+    void goDown()
+    {
+        Vec2d pos = player.getPosition();
+        pos.setY(pos.getY()-15);
     }
 }

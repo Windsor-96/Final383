@@ -12,14 +12,17 @@ import android.widget.TextView;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.game_models.LevelOneWorld;
 import cs383.wc.edu.walker.game_models.RenderLoop;
 import cs383.wc.edu.walker.game_models.TouchEventQueue;
+import cs383.wc.edu.walker.game_models.World;
 
 public class LevelTwoActivity extends GameActivity {
 
     private TextureView textureView;
     private TextView pointsView;
     private Thread renderLoopThread;
+    private World world;
 
 
     //TODO solve sample not ready issue. This may be solved already with loading screens, but for now I'm going back to MediaPlayer
@@ -63,7 +66,7 @@ public class LevelTwoActivity extends GameActivity {
     }
 
     private void startThreads() {
-        RenderLoop renderLoop = new RenderLoop(textureView, this);
+        RenderLoop renderLoop = new RenderLoop(textureView, world);
         renderLoopThread = new Thread(renderLoop);
         renderLoopThread.start();
     }
@@ -73,6 +76,7 @@ public class LevelTwoActivity extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_view);
+        world = new LevelOneWorld(this);
         BitmapRepo.getInstance().setContext(this);
         textureView = findViewById(R.id.texture_view);
         textureView.setSurfaceTextureListener(textureListener);
