@@ -11,6 +11,5 @@ import android.support.v7.app.AppCompatActivity;
 
 public abstract class GameActivity extends AppCompatActivity {
     public abstract void playMedia(int resource);
-    public abstract void updateScore(long score);
     public abstract void promptLevelEnd(long score);
 }
