@@ -49,7 +49,6 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
 
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-            pointsText.setText(world.getPlayer().getPoints()+"");
         }
     };
 
@@ -78,8 +77,6 @@ public class LevelOneActivity extends AppCompatActivity implements SensorEventLi
         setContentView(R.layout.activity_one_level);
         BitmapRepo.getInstance().setContext(this);
         world = new LevelOneWorld();
-        pointsText = findViewById(R.id.level_one_points);
-        pointsText.setText(0+"");
         textureView = findViewById(R.id.level_one_textureview);
         textureView.setSurfaceTextureListener(textureListener);
         textureView.setOnTouchListener(new View.OnTouchListener() {
