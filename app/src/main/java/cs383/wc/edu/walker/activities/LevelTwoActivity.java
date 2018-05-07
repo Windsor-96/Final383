@@ -132,13 +132,7 @@ public class LevelTwoActivity extends GameActivity {
         }
     }
 
-    @Override
-    public void updateScore(long score) {
-        runOnUiThread(() -> {
-            String s = "Points: " + score;
-            pointsView.setText(s);
-        });
-    }
+
 
     @Override
     public void promptLevelEnd(long score) {
