@@ -1,5 +1,7 @@
 package cs383.wc.edu.walker.sprites;
 
+import android.support.annotation.NonNull;
+
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.bitmaps.BitmapSequence;
@@ -11,7 +13,7 @@ import cs383.wc.edu.walker.game_models.World;
  * TODO DOCUMENTATION
  */
 
-public class BulletSprite extends PhysicalSprite {
+public class BulletSprite extends PhysicalSprite implements Comparable<BulletSprite> {
     private PlayerSprite owner;
     private static final float VELOCITY = 400f;
     private World world;
@@ -40,5 +42,10 @@ public class BulletSprite extends PhysicalSprite {
             owner.onBirdHit(this);
             world.playMedia(R.raw.bullet_impact);
         }
+    }
+
+    @Override
+    public int compareTo(@NonNull BulletSprite o) {
+        return this.equals(o) ? 0 : 1;
     }
 }

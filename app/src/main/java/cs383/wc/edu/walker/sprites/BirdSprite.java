@@ -1,13 +1,16 @@
 package cs383.wc.edu.walker.sprites;
 
-import cs383.wc.edu.walker.activities.MainActivity;
+import android.support.annotation.NonNull;
+
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.activities.LevelOneActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.bitmaps.BitmapSequence;
-import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.game_models.Vec2d;
 import cs383.wc.edu.walker.game_models.World;
 
-public class BirdSprite extends Sprite {
+@SuppressWarnings("FieldCanBeLocal")
+public class BirdSprite extends Sprite implements Comparable<BirdSprite> {
     private World world;
     private int velocityX = -20;
     private int velocityY = 0;
@@ -44,8 +47,8 @@ public class BirdSprite extends Sprite {
     @Override
     public void tick(double dt) {
         super.tick(dt);
-        setPosition(getPosition().add(new Vec2d(velocityX*dt,velocityY*dt)));
-        if(getPosition().getY() > MainActivity.HEIGHT && isDead())
+        setPosition(getPosition().add(new Vec2d(velocityX * dt, velocityY * dt)));
+        if ((getPosition().getY() > LevelOneActivity.HEIGHT && isDead()) || getPosition().getX() + 100 < world.getPlayerX())
             world.removeSprite(this);
     }
 
@@ -58,5 +61,10 @@ public class BirdSprite extends Sprite {
     @Override
     public boolean isActive() {
         return false;
+    }
+
+    @Override
+    public int compareTo(@NonNull BirdSprite o) {
+        return this.equals(o) ? 0 : 1;
     }
 }

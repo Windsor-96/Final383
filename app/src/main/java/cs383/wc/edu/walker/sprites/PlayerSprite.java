@@ -3,7 +3,7 @@ package cs383.wc.edu.walker.sprites;
 import android.util.Log;
 
 import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.activities.MainActivity;
+import cs383.wc.edu.walker.activities.LevelOneActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 import cs383.wc.edu.walker.game_models.Collision;
@@ -20,7 +20,7 @@ public class PlayerSprite extends Sprite {
     private boolean dead;
     private BitmapSequence deadSequence;
     private Vec2d acceleration;
-    private int score;
+    private long score;
 
     public PlayerSprite(Vec2d v, World containerWorld) {
         super(v);
@@ -63,7 +63,7 @@ public class PlayerSprite extends Sprite {
     public void tick(double dt) {
         super.tick(dt);
         setPosition(getPosition().add(new Vec2d((acceleration.getX() * dt), acceleration.getY() * dt)));
-        if(getPosition().getY() + 100 > MainActivity.HEIGHT || getPosition().getY() < 0)
+        if(getPosition().getY() + 100 > LevelOneActivity.HEIGHT || getPosition().getY() < 0)
             moveStraight();
 
     }
@@ -89,10 +89,7 @@ public class PlayerSprite extends Sprite {
     private void makeDead() {
         dead = true;
         setBitmaps(deadSequence);
-    }
-
-    public int getScore() {
-        return score;
+        world.onPlayerDeath();
     }
 
     public void addTimeSurvived(int time) { score += time;}

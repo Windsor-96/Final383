@@ -1,18 +1,20 @@
 package cs383.wc.edu.walker.game_models;
 
+import android.app.Activity;
 import android.graphics.Canvas;
 import android.view.TextureView;
 
-import cs383.wc.edu.walker.activities.MainActivity;
+import cs383.wc.edu.walker.activities.GameActivity;
+import cs383.wc.edu.walker.activities.LevelOneActivity;
 
 public class RenderLoop implements Runnable {
     private static final int FPS = 30;
     private final World world;
     private final TextureView textureView;
 
-    public RenderLoop(TextureView textureView, MainActivity mainActivity) {
+    public RenderLoop(TextureView textureView, GameActivity gameActivity) {
         this.textureView = textureView;
-        world = new World(mainActivity);
+        world = new World(gameActivity);
     }
 
     @Override
