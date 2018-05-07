@@ -3,13 +3,13 @@ package cs383.wc.edu.walker.activities;
 import android.app.ActionBar;
 import android.content.res.Resources;
 import android.graphics.SurfaceTexture;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.TextView;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
@@ -22,7 +22,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextureView textureView;
+    private TextView pointsView;
     private Thread renderLoopThread;
+
+
+    //TODO solve sample not ready issue. This may be solved already with loading screens, but for now I'm going back to MediaPlayer
+    //private SoundPool soundPool;
+    private MediaPlayer bulletImpact, bulletLaunch, DANGERZONE;
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
 
@@ -61,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startThreads() {
-
         RenderLoop renderLoop = new RenderLoop(textureView, this);
         renderLoopThread = new Thread(renderLoop);
         renderLoopThread.start();
@@ -81,10 +86,31 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        //TODO make the music here and play it, we can change the music but for now you're stuck with Kenny Loggins,
-        MediaPlayer DANGER_ZONE = MediaPlayer.create(this, R.raw.danger_zone);
-        DANGER_ZONE.setLooping(true);
-        DANGER_ZONE.start();
+
+        pointsView = findViewById(R.id.points_text);
+        pointsView.setTextColor(0xFFFFFF);
+
+
+        //make the music here and play it, we can change the music but for now you're stuck with Kenny Loggins,
+//        soundPool = new SoundPool.Builder().setMaxStreams(10).build();
+//        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+//            @Override
+//            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+//                if(sampleId == R.raw.danger_zone)
+//                    soundPool.play(sampleId, 1f, 1f, 1, -1, 1);
+//            }
+//        });
+//        soundPool.load(this, R.raw.bullet_launch, 1);
+//        soundPool.load(this, R.raw.bullet_impact, 1);
+//        soundPool.load(this, R.raw.danger_zone, 1);
+//        soundPool.play(R.raw.danger_zone, 1f, 1f, 1, -1, 1f);
+
+        bulletImpact = MediaPlayer.create(this, R.raw.bullet_impact);
+        bulletLaunch = MediaPlayer.create(this, R.raw.bullet_launch);
+        DANGERZONE = MediaPlayer.create(this, R.raw.danger_zone);
+        DANGERZONE.setLooping(true);
+        DANGERZONE.start();
+
         goFullScreen();
     }
 
@@ -101,11 +127,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void playMedia(int resource) {
-        MediaPlayer.create(this, resource).start();
+        //soundPool.play(resource, 1f, 1f, 1, 0, 1f);
+        switch (resource) {
+            case R.raw.bullet_impact:
+                bulletImpact.start();
+                break;
+            case R.raw.bullet_launch:
+                bulletLaunch.start();
+                break;
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+//        if (soundPool != null)
+//            soundPool.autoPause();
+
+        bulletLaunch.pause();
+        bulletImpact.pause();
+        DANGERZONE.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (soundPool != null)
+//            soundPool.autoResume();
+        bulletLaunch.start();
+        bulletImpact.start();
+        DANGERZONE.start();
+    }
+
+    public void updateScore(final int score) {
+        runOnUiThread(() -> {
+            String s = "Points: " + score;
+            pointsView.setText(s);
+        });
+
     }
 }

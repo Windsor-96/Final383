@@ -1,5 +1,7 @@
 package cs383.wc.edu.walker.sprites;
 
+import android.util.Log;
+
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.activities.MainActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
@@ -18,7 +20,7 @@ public class PlayerSprite extends Sprite {
     private boolean dead;
     private BitmapSequence deadSequence;
     private Vec2d acceleration;
-    private int points;
+    private int score;
 
     public PlayerSprite(Vec2d v, World containerWorld) {
         super(v);
@@ -26,7 +28,7 @@ public class PlayerSprite extends Sprite {
         dead = false;
         loadBitmaps();
         acceleration = new Vec2d( VELOCITY, 0f);
-        points = 0;
+        score = 0;
     }
 
     private void loadBitmaps() {
@@ -61,7 +63,7 @@ public class PlayerSprite extends Sprite {
     public void tick(double dt) {
         super.tick(dt);
         setPosition(getPosition().add(new Vec2d((acceleration.getX() * dt), acceleration.getY() * dt)));
-        if(getPosition().getY() > MainActivity.HEIGHT || getPosition().getY() < 0)
+        if(getPosition().getY() + 100 > MainActivity.HEIGHT || getPosition().getY() < 0)
             moveStraight();
 
     }
@@ -77,9 +79,10 @@ public class PlayerSprite extends Sprite {
         else if(other instanceof BoostSprite) {
             //we only have one boost so we're just gonna tell the boost to remove itself, and then tell the world to boost us
             world.removeSprite(other);
-            //Is it ridiculous to casually double the player's points? Probably
+            //Is it ridiculous to casually double the player's score? Probably
             //But it's also straight forward and gives the player other things to do then shoot at twitter birds
-            points *= 2;
+            score *= 2;
+            world.updateScore(score);
         }
     }
 
@@ -88,11 +91,11 @@ public class PlayerSprite extends Sprite {
         setBitmaps(deadSequence);
     }
 
-    public int getPoints() {
-        return points;
+    public int getScore() {
+        return score;
     }
 
-    public void addTimeSurvived(int time) { points += time;}
+    public void addTimeSurvived(int time) { score += time;}
 
     public float getY() {
         return getPosition().getY();
@@ -114,7 +117,13 @@ public class PlayerSprite extends Sprite {
     }
 
     void onBirdHit(BulletSprite bullet) {
-        points += 10;
+        score += 10;
+        Log.d("SCORE: ", "" + score);
         world.removeSprite(bullet);
+        world.updateScore(score);
+    }
+
+    public boolean isDead() {
+        return dead;
     }
 }

@@ -20,6 +20,7 @@ import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.game_models.Collision;
 import cs383.wc.edu.walker.game_models.Vec2d;
 import cs383.wc.edu.walker.sprites.BirdSprite;
+import cs383.wc.edu.walker.sprites.BoostSprite;
 import cs383.wc.edu.walker.sprites.BulletSprite;
 import cs383.wc.edu.walker.sprites.PlayerSprite;
 import cs383.wc.edu.walker.sprites.Sprite;
@@ -59,10 +60,11 @@ public class World {
         grabTouchEvents();
         grabRotationEvents();
         ++tickCounter;
-        if(tickCounter == BULLET_RATE) {
+        if(tickCounter == BULLET_RATE && !player.isDead()) {
             sprites.add(new BulletSprite(new Vec2d(player.getX() + 30, player.getY() + 30), player, this));
             //TODO remove this line when we get pre-generated maps
             sprites.add(new BirdSprite(new Vec2d(player.getX() + 2000, player.getY()), this));
+            sprites.add(new BoostSprite(new Vec2d(player.getX() + 2050, player.getY())));
             tickCounter = 0;
 
         }
@@ -148,6 +150,11 @@ public class World {
 
     public void playMedia(int resource) {
         activity.playMedia(resource);
+    }
+
+    public void updateScore(int score) {
+        activity.updateScore(score);
+
     }
 
 }

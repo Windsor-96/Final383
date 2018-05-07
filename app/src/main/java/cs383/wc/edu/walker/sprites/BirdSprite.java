@@ -26,10 +26,10 @@ public class BirdSprite extends Sprite {
     private void loadBitmaps() {
         BitmapRepo r = BitmapRepo.getInstance();
         BitmapSequence s = new BitmapSequence();
-        s.addImage(r.getImage(R.drawable.bird_1), 0.1);
-        s.addImage(r.getImage(R.drawable.bird_2_4), 0.1);
-        s.addImage(r.getImage(R.drawable.bird_3), 0.1);
-        s.addImage(r.getImage(R.drawable.bird_2_4), 0.1);
+        s.addImage(r.getImage(R.drawable.bird_1), 0.05);
+        s.addImage(r.getImage(R.drawable.bird_2_4), 0.05);
+        s.addImage(r.getImage(R.drawable.bird_3), 0.05);
+        s.addImage(r.getImage(R.drawable.bird_2_4), 0.05);
 
         deadSequence = new BitmapSequence();
         deadSequence.addImage(r.getImage(R.drawable.birtd_dead), 200);

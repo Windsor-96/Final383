@@ -1,5 +1,8 @@
 package cs383.wc.edu.walker.sprites;
 
+import cs383.wc.edu.walker.R;
+import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 import cs383.wc.edu.walker.game_models.Vec2d;
 
 /**
@@ -11,6 +14,9 @@ import cs383.wc.edu.walker.game_models.Vec2d;
 public class BoostSprite extends Sprite {
     public BoostSprite(Vec2d v) {
         super(v);
+        BitmapSequence s = new BitmapSequence();
+        s.addImage(BitmapRepo.getInstance().getImage(R.drawable.boost), 100);
+        setBitmaps(s);
     }
 
     @Override
