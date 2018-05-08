@@ -154,12 +154,11 @@ public class LevelOneActivity extends GameActivity implements SensorEventListene
         }
     }
 
+
+
     @Override
-    public void updateScore(long score) {
-        runOnUiThread(() -> {
-            String s = "Points: " + score;
-            pointsView.setText(s);
-        });
+    public void promptLevelEnd(long score) {
+        runOnUiThread((this::onBackPressed));
     }
 
     @Override

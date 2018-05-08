@@ -3,24 +3,26 @@ package cs383.wc.edu.walker.game_models;
 import android.graphics.Canvas;
 import android.view.TextureView;
 
+import cs383.wc.edu.walker.activities.GameActivity;
+
 public class RenderLoop implements Runnable {
     private static final int FPS = 30;
     private final World world;
     private final TextureView textureView;
 
-    public RenderLoop(TextureView textureView, World world) {
+    public RenderLoop(TextureView textureView, GameActivity gameActivity) {
         this.textureView = textureView;
-        this.world = world;
+        world = new World(gameActivity);
     }
 
     @Override
     public void run() {
-        while(!Thread.interrupted()) {
-            world.tick(1.0/FPS);
+        while (!Thread.interrupted()) {
+            world.tick(1.0 / FPS);
             drawWorld();
             try {
                 delay();
-            } catch (InterruptedException ex) {
+            } catch (InterruptedException ignored) {
 
             }
         }

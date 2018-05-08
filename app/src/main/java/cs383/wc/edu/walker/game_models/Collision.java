@@ -16,10 +16,10 @@ public class Collision {
      * Construct a Collision such that sprite1 is equal to the active sprite from s1 and s2 (if one of them
      * is active) or either s1 or s2 otherwise.
      *
-     * @param s1
-     * @param s2
+     * @param s1 first sprite
+     * @param s2 second sprite
      */
-    public Collision(Sprite s1, Sprite s2) {
+    Collision(Sprite s1, Sprite s2) {
         if (s1.isActive()) {
             sprite1 = s1;
             sprite2 = s2;
@@ -29,7 +29,7 @@ public class Collision {
         }
     }
 
-    public void resolve() {
+    void resolve() {
         sprite1.resolve(this, sprite2);
     }
 

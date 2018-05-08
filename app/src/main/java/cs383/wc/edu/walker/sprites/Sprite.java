@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 import cs383.wc.edu.walker.game_models.Collision;
 import cs383.wc.edu.walker.game_models.Vec2d;
+import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 
 /**
  * Created by shaffer on 4/27/16.

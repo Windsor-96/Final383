@@ -36,13 +36,7 @@ public class PlayerSprite extends Sprite {
         BitmapSequence s = new BitmapSequence();
         //TODO modify the time between each frame accordingly
         s.addImage(r.getImage(R.drawable.plane), 60);
-//        s.addImage(r.getImage(R.drawable.player_plane2), 0.1);
-//        s.addImage(r.getImage(R.drawable.player_plane3), 0.1);
-//        s.addImage(r.getImage(R.drawable.player_plane4), 0.1);
-//        s.addImage(r.getImage(R.drawable.player_plane5), 0.1);
-//        s.addImage(r.getImage(R.drawable.player_plane6), 0.1);
-//        s.addImage(r.getImage(R.drawable.player_plane7), 0.1);
-//        s.addImage(r.getImage(R.drawable.player_plane8), 0.1);
+
 
         setBitmaps(s);
 
@@ -78,12 +72,15 @@ public class PlayerSprite extends Sprite {
         }
         else if(other instanceof BoostSprite) {
             //we only have one boost so we're just gonna tell the boost to remove itself, and then tell the world to boost us
-            world.removeSprite(other);
+            world.removeBulletSprite((BulletSprite)other);
             //Is it ridiculous to casually double the player's score? Probably
             //But it's also straight forward and gives the player other things to do then shoot at twitter birds
             score *= 2;
-            world.updateScore(score);
         }
+    }
+
+    public long getScore() {
+        return score;
     }
 
     private void makeDead() {
@@ -113,14 +110,17 @@ public class PlayerSprite extends Sprite {
         acceleration.setY(0f);
     }
 
-    void onBirdHit(BulletSprite bullet) {
-        score += 10;
-        Log.d("SCORE: ", "" + score);
-        world.removeSprite(bullet);
-        world.updateScore(score);
+    void onBirdHit(BulletSprite bullet, boolean isAlreadyDead) {
+        if(!isAlreadyDead) {
+            score += 10;
+            Log.d("SCORE: ", "" + score);
+        }
+        world.removeBulletSprite(bullet);
     }
 
     public boolean isDead() {
         return dead;
     }
+
+
 }

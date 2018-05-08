@@ -35,7 +35,7 @@ public class BirdSprite extends Sprite implements Comparable<BirdSprite> {
         s.addImage(r.getImage(R.drawable.bird_2_4), 0.05);
 
         deadSequence = new BitmapSequence();
-        deadSequence.addImage(r.getImage(R.drawable.birtd_dead), 200);
+        deadSequence.addImage(r.getImage(R.drawable.bird_dead), 200);
         setBitmaps(s);
 
     }
@@ -49,7 +49,7 @@ public class BirdSprite extends Sprite implements Comparable<BirdSprite> {
         super.tick(dt);
         setPosition(getPosition().add(new Vec2d(velocityX * dt, velocityY * dt)));
         if ((getPosition().getY() > LevelOneActivity.HEIGHT && isDead()) || getPosition().getX() + 100 < world.getPlayerX())
-            world.removeSprite(this);
+            world.removeBirdSprite(this);
     }
 
     void makeDead() {
