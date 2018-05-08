@@ -167,6 +167,12 @@ public class LevelOneActivity extends GameActivity implements SensorEventListene
 //        if (soundPool != null)
 //            soundPool.autoPause();
         mSensorManager.unregisterListener(this);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
         bulletLaunch.pause();
         bulletImpact.pause();
         DANGERZONE.pause();
