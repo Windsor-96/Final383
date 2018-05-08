@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.activities.LevelOneActivity;
+import cs383.wc.edu.walker.activities.MainActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 import cs383.wc.edu.walker.game_models.Vec2d;
@@ -48,7 +49,7 @@ public class BirdSprite extends Sprite implements Comparable<BirdSprite> {
     public void tick(double dt) {
         super.tick(dt);
         setPosition(getPosition().add(new Vec2d(velocityX * dt, velocityY * dt)));
-        if ((getPosition().getY() > LevelOneActivity.HEIGHT && isDead()) || getPosition().getX() + 100 < world.getPlayerX())
+        if ((getPosition().getY() > MainActivity.HEIGHT && isDead()) || getPosition().getX() + 100 < world.getPlayerX())
             world.removeBirdSprite(this);
     }
 

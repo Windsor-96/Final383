@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -31,7 +32,6 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
 
 
     private TextureView textureView;
-    private TextView pointsView;
     private Thread renderLoopThread;
     private Sensor mSensor;
     private SensorManager mSensorManager;
@@ -100,8 +100,7 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
             return true;
         });
 
-        pointsView = findViewById(R.id.points_text);
-        pointsView.setTextColor(0xFFFFFF);
+
 
 
         //make the music here and play it, we can change the music but for now you're stuck with Kenny Loggins,
@@ -159,6 +158,12 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
     @Override
     public void promptLevelEnd(long score) {
         runOnUiThread((this::onBackPressed));
+    }
+
+    @Override
+    public void backToMenu() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
     @Override

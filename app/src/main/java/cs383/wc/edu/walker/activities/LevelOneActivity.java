@@ -3,7 +3,7 @@ package cs383.wc.edu.walker.activities;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
@@ -28,17 +28,21 @@ import cs383.wc.edu.walker.game_models.LevelOneWorld;
 public class LevelOneActivity extends GameActivity implements SensorEventListener
 {
     public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
+//only warnings left are for the texture view and not using a string resource when setting button text
+@SuppressWarnings("All")
+public class LevelOneActivity extends GameActivity {
 
 
     private TextureView textureView;
-    private TextView pointsView;
     private Thread renderLoopThread;
     private Sensor mSensor;
     private SensorManager mSensorManager;
     private World world;
+    private Button exitButton;
 
-
-    //TODO solve sample not ready issue. This may be solved already with loading screens, but for now I'm going back to MediaPlayer
+    /**
+     * solve sample not ready issue. This may be solved already with loading screens, but for now I'm going back to MediaPlayer
+     */
     //private SoundPool soundPool;
     private MediaPlayer bulletImpact, bulletLaunch, DANGERZONE;
 
@@ -100,8 +104,8 @@ public class LevelOneActivity extends GameActivity implements SensorEventListene
             return true;
         });
 
-        pointsView = findViewById(R.id.points_text);
-        pointsView.setTextColor(0xFFFFFF);
+        exitButton = findViewById(R.id.exit_button);
+        exitButton.setOnClickListener(v -> backToMenu());
 
 
         //make the music here and play it, we can change the music but for now you're stuck with Kenny Loggins,
@@ -155,10 +159,35 @@ public class LevelOneActivity extends GameActivity implements SensorEventListene
     }
 
 
-
     @Override
     public void promptLevelEnd(long score) {
-        runOnUiThread((this::onBackPressed));
+        runOnUiThread(() -> {
+            exitButton.setText("Points: " + score + "\nBack To Menu");
+            exitButton.setVisibility(View.VISIBLE);
+        });
+    }
+
+    //So, the UI thread hangs when we try to go back to menu, so let's just kill everything and start again
+    //When im doubt, going nuclear seems to be what a lot of people attempt when they have a quick loading app
+    @Override
+    public void backToMenu() {
+//        Intent i = getBaseContext().getPackageManager()
+//                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        finish();
+//        startActivity(i);
+        restartApp();
+    }
+
+    private void restartApp() {
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        int mPendingIntentId = 123456;
+//        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 2000, mPendingIntent);
+//        System.exit(0);
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 
     @Override
@@ -181,7 +210,6 @@ public class LevelOneActivity extends GameActivity implements SensorEventListene
     @Override
     protected void onResume() {
         super.onResume();
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_GAME);
 //        if (soundPool != null)
 //            soundPool.autoResume();

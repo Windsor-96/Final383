@@ -7,8 +7,8 @@ import cs383.wc.edu.walker.activities.GameActivity;
 
 public class RenderLoop implements Runnable {
     private static final int FPS = 30;
-    private final World world;
-    private final TextureView textureView;
+    private World world;
+    private TextureView textureView;
 
     public RenderLoop(TextureView textureView, World world) {
         this.textureView = textureView;

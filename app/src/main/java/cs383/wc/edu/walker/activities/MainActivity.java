@@ -2,6 +2,7 @@ package cs383.wc.edu.walker.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import cs383.wc.edu.walker.R;
  */
 
 public class MainActivity extends AppCompatActivity {
+    public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
+    public static final int WIDTH = Resources.getSystem().getDisplayMetrics().widthPixels;
 
     Button levelOneButton;
     Button levelTwoButton;
@@ -30,19 +33,22 @@ public class MainActivity extends AppCompatActivity {
         themeMusic.start();
 
         levelOneButton = findViewById(R.id.main_level_one_button);
-        levelOneButton.setOnClickListener((View view) -> {
-            themeMusic.pause();
-            themeMusic.release();
-            startActivity(new Intent(MainActivity.this, LevelOneActivity.class));
+        levelOneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                themeMusic.stop();
+                MainActivity.this.startActivity(new Intent(MainActivity.this, LevelOneActivity.class));
+            }
         });
 
         levelTwoButton = findViewById(R.id.main_level_two_button);
-        levelTwoButton.setOnClickListener((View view) -> {
-            themeMusic.pause();
-            themeMusic.release();
-            startActivity(new Intent(MainActivity.this, LevelTwoActivity.class));
+        levelTwoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                themeMusic.stop();
+                MainActivity.this.startActivity(new Intent(MainActivity.this, LevelTwoActivity.class));
+            }
         });
-
     }
 
     @Override
@@ -55,6 +61,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (themeMusic == null)
             themeMusic = MediaPlayer.create(this, R.raw.menu_music);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        themeMusic.stop();
+        themeMusic.release();
     }
 }
 
