@@ -1,5 +1,6 @@
 package cs383.wc.edu.walker.game_models;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -51,40 +52,7 @@ public class World {
         isGameOver = false;
         paint = new Paint();
         paint.setColor(0xFFFFFFFF);
-        sprites.add(player = new PlayerSprite(new Vec2d(960, 540), this));
 
-        if (gameActivity instanceof LevelOneActivity) {
-            sprites.add(new BirdSprite(new Vec2d(2000, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2000*1.8, 450), this));
-            sprites.add(new BoostSprite(new Vec2d(2200*1.8, 900)));
-            sprites.add(new BirdSprite(new Vec2d(1800*1.8, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(3000*1.8, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 300), this));
-            sprites.add(new BoostSprite(new Vec2d(3500, 100)));
-            sprites.add(new BirdSprite(new Vec2d(3800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(4000, 150), this));
-            sprites.add(new BirdSprite(new Vec2d(4200, 450), this));
-
-        } else if (gameActivity instanceof LevelTwoActivity) {
-            sprites.add(new BirdSprite(new Vec2d(2000, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2000, 450), this));
-            sprites.add(new BoostSprite(new Vec2d(2200, 900)));
-            sprites.add(new BirdSprite(new Vec2d(1800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 200), this));
-            sprites.add(new BirdSprite(new Vec2d(3000, 500), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 100), this));
-            sprites.add(new BoostSprite(new Vec2d(2500, 100)));
-            sprites.add(new BirdSprite(new Vec2d(3800, 700), this));
-            sprites.add(new BirdSprite(new Vec2d(4000, 850), this));
-            sprites.add(new BirdSprite(new Vec2d(4200, 450), this));
-            sprites.add(new BirdSprite(new Vec2d(1800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 200), this));
-            sprites.add(new BirdSprite(new Vec2d(3000, 500), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 100), this));
-        }
-
-        sprites.add(new BirdSprite(new Vec2d(2000, 540), this));
         removeQueue = new PriorityQueue<>();
 
     }
@@ -141,9 +109,9 @@ public class World {
         Log.d("Accelerometer", "x: " + e.values[0] + "y: " + e.values[1] + "z: " + e.values[2]);
         if (Math.abs(e.values[2]) > .07) {
             if (e.values[2] < 0) {
-                player.moveUp();
+                goUp();
             } else {
-                player.moveDown();
+                goDown();
             }
         } else {
             player.moveStraight();
@@ -175,9 +143,9 @@ public class World {
     private void handleMotionEvent(MotionEvent e) {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
             if (e.getY() > player.getY())
-                player.moveUp();
+                goUp();
             else
-                player.moveDown();
+                goDown();
         } else if (e.getAction() == MotionEvent.ACTION_UP)
             player.moveStraight();
 
@@ -218,5 +186,37 @@ public class World {
 
     public void removeBirdSprite(BirdSprite birdSprite) {
         removeQueue.add(birdSprite);
+    }
+
+    void addSprite(Sprite s)
+    {
+        sprites.add(s);
+    }
+
+    void setPlayer(PlayerSprite p)
+    {
+        player = p;
+    }
+
+    PlayerSprite getPlayer()
+    {
+        return player;
+    }
+
+    void goUp()
+    {
+        Vec2d pos = player.getPosition();
+        pos.setY(pos.getY()+15);
+    }
+
+    void goDown()
+    {
+        Vec2d pos = player.getPosition();
+        pos.setY(pos.getY()-15);
+    }
+
+    public GameActivity getContext()
+    {
+        return activity;
     }
 }

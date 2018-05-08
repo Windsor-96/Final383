@@ -10,9 +10,9 @@ public class RenderLoop implements Runnable {
     private final World world;
     private final TextureView textureView;
 
-    public RenderLoop(TextureView textureView, GameActivity gameActivity) {
+    public RenderLoop(TextureView textureView, World world) {
         this.textureView = textureView;
-        world = new World(gameActivity);
+        this.world = world;
     }
 
     @Override

@@ -14,8 +14,6 @@ import cs383.wc.edu.walker.game_models.World;
 public class PlayerSprite extends Sprite {
 
     private static int VELOCITY = 150;
-    private static float UP_ACCELERATION = 250;
-    private static float DOWN_ACCELERATION = -250;
     private World world;
     private boolean dead;
     private BitmapSequence deadSequence;
@@ -33,12 +31,13 @@ public class PlayerSprite extends Sprite {
 
     private void loadBitmaps() {
         BitmapRepo r = BitmapRepo.getInstance();
+        r.setContext(world.getContext());
         BitmapSequence s = new BitmapSequence();
         //TODO modify the time between each frame accordingly
+
         s.addImage(r.getImage(R.drawable.plane), 60);
-
-
         setBitmaps(s);
+
 
         deadSequence = new BitmapSequence();
         deadSequence.addImage(r.getImage(R.drawable.plane_death1), 0.2);
@@ -96,14 +95,6 @@ public class PlayerSprite extends Sprite {
     }
     public float getX() {
         return getPosition().getX();
-    }
-
-    public void moveUp() {
-        acceleration.setY(UP_ACCELERATION);
-    }
-
-    public void moveDown() {
-        acceleration.setY(DOWN_ACCELERATION);
     }
 
     public void moveStraight() {
