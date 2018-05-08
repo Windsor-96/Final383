@@ -32,6 +32,8 @@ public class World {
     private int tickCounter;
     private boolean isGameOver;
     private Paint paint;
+    private int worldHeight;
+    private int screenLength;
     /**
      * The remove queue exists to avoid ConcurrentModificationExceptions caused by removing a sprite
      * from the sprite list while we're iterating through it
@@ -52,9 +54,11 @@ public class World {
         isGameOver = false;
         paint = new Paint();
         paint.setColor(0xFFFFFFFF);
-
         removeQueue = new PriorityQueue<>();
-
+        BitmapRepo.getInstance().setContext(activity);
+        Bitmap bg = BitmapRepo.getInstance().getImage(R.drawable.background);
+        worldHeight = bg.getHeight();
+        screenLength = bg.getWidth();
     }
 
     void tick(double dt) {
@@ -109,9 +113,9 @@ public class World {
         Log.d("Accelerometer", "x: " + e.values[0] + "y: " + e.values[1] + "z: " + e.values[2]);
         if (Math.abs(e.values[2]) > .07) {
             if (e.values[2] < 0) {
-                goUp();
-            } else {
                 goDown();
+            } else {
+                goUp();
             }
         } else {
             player.moveStraight();
@@ -143,9 +147,9 @@ public class World {
     private void handleMotionEvent(MotionEvent e) {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
             if (e.getY() > player.getY())
-                goUp();
-            else
                 goDown();
+            else
+                goUp();
         } else if (e.getAction() == MotionEvent.ACTION_UP)
             player.moveStraight();
 
@@ -203,16 +207,18 @@ public class World {
         return player;
     }
 
-    void goUp()
-    {
-        Vec2d pos = player.getPosition();
-        pos.setY(pos.getY()+15);
-    }
-
     void goDown()
     {
         Vec2d pos = player.getPosition();
-        pos.setY(pos.getY()-15);
+        if (pos.getY() < worldHeight-500)
+            pos.setY(pos.getY()+15);
+    }
+
+    void goUp()
+    {
+        Vec2d pos = player.getPosition();
+        if (pos.getY() > 15)
+            pos.setY(pos.getY()-15);
     }
 
     public GameActivity getContext()
