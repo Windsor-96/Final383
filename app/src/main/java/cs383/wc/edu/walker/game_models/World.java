@@ -34,6 +34,9 @@ public class World {
     private Paint paint;
     private int worldHeight;
     private int screenLength;
+    private int lowTier;
+    private int midTier;
+    private int highTier;
     /**
      * The remove queue exists to avoid ConcurrentModificationExceptions caused by removing a sprite
      * from the sprite list while we're iterating through it
@@ -57,7 +60,8 @@ public class World {
         removeQueue = new PriorityQueue<>();
         BitmapRepo.getInstance().setContext(activity);
         Bitmap bg = BitmapRepo.getInstance().getImage(R.drawable.background);
-        worldHeight = bg.getHeight();
+        worldHeight = bg.getHeight() -500; //trial and error
+        setTiers();
         screenLength = bg.getWidth();
     }
 
@@ -210,7 +214,7 @@ public class World {
     void goDown()
     {
         Vec2d pos = player.getPosition();
-        if (pos.getY() < worldHeight-500)
+        if (pos.getY() < worldHeight)
             pos.setY(pos.getY()+15);
     }
 
@@ -224,5 +228,27 @@ public class World {
     public GameActivity getContext()
     {
         return activity;
+    }
+
+    void setTiers()
+    {
+        midTier = worldHeight/2;
+        highTier = midTier + worldHeight/4;
+        lowTier = midTier - worldHeight/4;
+    }
+
+    public int getLow()
+    {
+        return lowTier;
+    }
+
+    public int getMid()
+    {
+        return midTier;
+    }
+
+    public int getHigh()
+    {
+        return highTier;
     }
 }

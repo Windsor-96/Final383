@@ -10,21 +10,20 @@ import cs383.wc.edu.walker.sprites.PlayerSprite;
 
 public class LevelOneWorld extends World
 {
-        double screenLength;
 
         public LevelOneWorld(GameActivity g) {
             super(g);
-            setPlayer(new PlayerSprite(new Vec2d(50,300), this));
+            setPlayer(new PlayerSprite(new Vec2d(50,getMid()), this));
             addSprite(getPlayer());
-            addSprite(new BirdSprite(new Vec2d(2000, 300), this));
-            addSprite(new BirdSprite(new Vec2d(2000, 450), this));
-            addSprite(new BirdSprite(new Vec2d(1800, 300), this));
-            addSprite(new BirdSprite(new Vec2d(2400, 300), this));
-            addSprite(new BirdSprite(new Vec2d(3000, 300), this));
-            addSprite(new BirdSprite(new Vec2d(3400, 300), this));
-            addSprite(new BirdSprite(new Vec2d(3800, 300), this));
-            addSprite(new BirdSprite(new Vec2d(4000, 150), this));
-            addSprite(new BirdSprite(new Vec2d(4200, 450),this));
+            addSprite(new BirdSprite(new Vec2d(2000, getMid()), this));
+            addSprite(new BirdSprite(new Vec2d(2000, getHigh()), this));
+            addSprite(new BirdSprite(new Vec2d(1800, getMid()), this));
+            addSprite(new BirdSprite(new Vec2d(2400, getMid()), this));
+            addSprite(new BirdSprite(new Vec2d(3000, getMid()), this));
+            addSprite(new BirdSprite(new Vec2d(3400, getMid()), this));
+            addSprite(new BirdSprite(new Vec2d(3800, getMid()), this));
+            addSprite(new BirdSprite(new Vec2d(4000, getLow()), this));
+            addSprite(new BirdSprite(new Vec2d(4200, getHigh()),this));
         }
 
 }
