@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:orientation="horizontal"
+    android:gravity="center_vertical|center_horizontal"
+    android:background="@drawable/background" >
 
     <Button
         android:id="@+id/main_level_one_button"
@@ -12,10 +14,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="8dp"
-        android:text="@string/level_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/level_1" />
 
     <Button
         android:id="@+id/main_level_two_button"
@@ -24,16 +23,15 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
-        android:text="@string/level_2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/level_2" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+    <Button
+        android:id="@+id/forever_level_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/forever" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

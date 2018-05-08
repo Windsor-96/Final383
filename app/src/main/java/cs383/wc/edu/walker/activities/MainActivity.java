@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button levelOneButton;
     Button levelTwoButton;
+    Button foreverButton;
     MediaPlayer themeMusic;
 
     @Override
@@ -33,21 +34,24 @@ public class MainActivity extends AppCompatActivity {
         themeMusic.start();
 
         levelOneButton = findViewById(R.id.main_level_one_button);
-        levelOneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                themeMusic.stop();
-                MainActivity.this.startActivity(new Intent(MainActivity.this, LevelOneActivity.class));
-            }
+        levelOneButton.setOnClickListener((View view) -> {
+            themeMusic.pause();
+            themeMusic.release();
+            startActivity(new Intent(MainActivity.this, LevelOneActivity.class));
         });
 
         levelTwoButton = findViewById(R.id.main_level_two_button);
-        levelTwoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                themeMusic.stop();
-                MainActivity.this.startActivity(new Intent(MainActivity.this, LevelTwoActivity.class));
-            }
+        levelTwoButton.setOnClickListener((View view) -> {
+            themeMusic.pause();
+            themeMusic.release();
+            startActivity(new Intent(MainActivity.this, LevelTwoActivity.class));
+        });
+
+        foreverButton = findViewById(R.id.forever_level_button);
+        foreverButton.setOnClickListener((View view) -> {
+            themeMusic.pause();
+            themeMusic.release();
+            startActivity(new Intent(MainActivity.this, Forever.class));
         });
     }
 
