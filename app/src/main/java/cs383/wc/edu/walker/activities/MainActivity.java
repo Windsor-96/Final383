@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button levelOneButton;
     Button levelTwoButton;
+    Button foreverButton;
     MediaPlayer themeMusic;
 
     @Override
@@ -43,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LevelTwoActivity.class));
         });
 
+        foreverButton = findViewById(R.id.forever_level_button);
+        foreverButton.setOnClickListener((View view) -> {
+            themeMusic.pause();
+            themeMusic.release();
+            startActivity(new Intent(MainActivity.this, Forever.class));
+        });
     }
 
     @Override

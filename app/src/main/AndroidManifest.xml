@@ -21,6 +21,8 @@
             android:screenOrientation="landscape"/>
         <activity android:name=".activities.LevelTwoActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".activities.Forever"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>
