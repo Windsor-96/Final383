@@ -22,14 +22,15 @@ public class InfiniteBirdsWorld extends World {
         ticks++;
         float x = getPlayerX();
         if (ticks < 1000) {
-            if (ticks % 101 == 0) {
+            if (ticks % 101 == 0)
+            {
                 addSprite(new BirdSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200)), this));
-
-                if (ticks % 153 == 0) {
-                    addSprite(new BirdSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200)), this));
-                    addSprite(new BirdSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200) - 300), this));
-                }
-            } else if (ticks < 2000) {
+            }
+            if (ticks % 153 == 0) {
+                addSprite(new BirdSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200)), this));
+                addSprite(new BirdSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200) - 300), this));
+            }
+        } else if (ticks < 2000) {
                 if (ticks % 93 == 0) {
                     addSprite(new BirdSprite(new Vec2d(x + 2600, rng.nextInt(MainActivity.HEIGHT - 200)), this));
                 }
@@ -39,7 +40,7 @@ public class InfiniteBirdsWorld extends World {
                 }
                 if (ticks % 492 == 0)
                     addSprite(new BoostSprite(new Vec2d(x + 2200, rng.nextInt(MainActivity.HEIGHT - 200))));
-            } else {
+        } else {
                 if (ticks % 57 == 0) {
                     addSprite(new BirdSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200)), this));
                 }
@@ -49,7 +50,6 @@ public class InfiniteBirdsWorld extends World {
                 }
                 if (ticks % 1087 == 0)
                     addSprite(new BoostSprite(new Vec2d(x + 2400, rng.nextInt(MainActivity.HEIGHT - 200))));
-            }
         }
     }
 }
