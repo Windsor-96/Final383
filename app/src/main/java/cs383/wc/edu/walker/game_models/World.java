@@ -1,6 +1,5 @@
 package cs383.wc.edu.walker.game_models;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,12 +9,9 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.activities.GameActivity;
-import cs383.wc.edu.walker.activities.LevelOneActivity;
-import cs383.wc.edu.walker.activities.LevelTwoActivity;
 import cs383.wc.edu.walker.activities.MainActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.sprites.BirdSprite;
@@ -28,16 +24,14 @@ import cs383.wc.edu.walker.sprites.Sprite;
 public class World {
     //The rate of shots is 1/BULLET_RATE ticks
     private static int BULLET_RATE = 45;
+//    private final int lowTier;
+//    private final int midTier;
+//    private final int highTier;
     private List<Sprite> sprites;
     private PlayerSprite player;
     private int tickCounter;
     private boolean isGameOver;
     private Paint paint;
-    private int worldHeight;
-    private int screenLength;
-    private int lowTier;
-    private int midTier;
-    private int highTier;
     /**
      * The remove queue exists to avoid ConcurrentModificationExceptions caused by removing a sprite
      * from the sprite list while we're iterating through it
@@ -45,7 +39,7 @@ public class World {
      * we will remove all sprites in the queue
      * IF THIS IS REMOVED WE WILL GET THAT EXCEPTION ANYTIME A BULLET OR BIRD ATTEMPTS TO REMOVE ITSELF
      */
-    private PriorityQueue<Sprite> removeQueue;
+    private ArrayList<Sprite> removeQueue;
     private GameActivity activity;
 
     /**
@@ -60,40 +54,11 @@ public class World {
         paint.setColor(0xFFFFFFFF);
         paint.setTextSize(100);
         sprites.add(player = new PlayerSprite(new Vec2d(960, 540), this));
+        removeQueue = new ArrayList<>();
+//        midTier = MainActivity.HEIGHT / 2;
+//        highTier = midTier + MainActivity.HEIGHT / 4;
+//        lowTier = midTier - MainActivity.WIDTH / 4;
 
-        if (gameActivity instanceof LevelOneActivity) {
-            sprites.add(new BirdSprite(new Vec2d(2000, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2000 * 1.8, 450), this));
-            sprites.add(new BoostSprite(new Vec2d(2200 * 1.8, 900)));
-            sprites.add(new BirdSprite(new Vec2d(1800 * 1.8, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(3000 * 1.8, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 300), this));
-            sprites.add(new BoostSprite(new Vec2d(3500, 100)));
-            sprites.add(new BirdSprite(new Vec2d(3800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(4000, 150), this));
-            sprites.add(new BirdSprite(new Vec2d(4200, 450), this));
-
-        } else if (gameActivity instanceof LevelTwoActivity) {
-            sprites.add(new BirdSprite(new Vec2d(2000, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2000, 450), this));
-            sprites.add(new BoostSprite(new Vec2d(2200, 900)));
-            sprites.add(new BirdSprite(new Vec2d(1800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 200), this));
-            sprites.add(new BirdSprite(new Vec2d(3000, 500), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 100), this));
-            sprites.add(new BoostSprite(new Vec2d(2500, 100)));
-            sprites.add(new BirdSprite(new Vec2d(3800, 700), this));
-            sprites.add(new BirdSprite(new Vec2d(4000, 850), this));
-            sprites.add(new BirdSprite(new Vec2d(4200, 450), this));
-            sprites.add(new BirdSprite(new Vec2d(1800, 300), this));
-            sprites.add(new BirdSprite(new Vec2d(2400, 200), this));
-            sprites.add(new BirdSprite(new Vec2d(3000, 500), this));
-            sprites.add(new BirdSprite(new Vec2d(3400, 100), this));
-        }
-
-        sprites.add(new BirdSprite(new Vec2d(2000, 540), this));
-        removeQueue = new PriorityQueue<>();
 
     }
 
@@ -116,7 +81,6 @@ public class World {
                 isGameOver = !isBirdsRemaining();
             }
         }
-        //TODO handle level being over, probably just tell the activity to finish or call a routine that prompts to mover on
         else {
             activity.promptLevelEnd(player.getScore());
         }
@@ -147,7 +111,7 @@ public class World {
 
     private void handleSensorEvent(SensorEvent e) {
         Log.d("Accelerometer", "x: " + e.values[0] + "y: " + e.values[1] + "z: " + e.values[2]);
-        if (Math.abs(e.values[2]) > .07) {
+        if (Math.abs(e.values[2]) > .09) {
             if (e.values[2] < 0) {
                 player.moveUp();
             } else {
@@ -172,7 +136,6 @@ public class World {
         for (Collision c : collisions) c.resolve();
 
     }
-
 
     /**
      * When the user touches the screen, this message is sent.  Probably you
@@ -204,7 +167,6 @@ public class World {
         c.drawText("Points: " + player.getScore(), player.getX(), MainActivity.HEIGHT * .08f, paint);
     }
 
-
     public void playMedia(int resource) {
         activity.playMedia(resource);
     }
@@ -226,71 +188,32 @@ public class World {
         removeQueue.add(birdSprite);
     }
 
-    public boolean isGameOver() {
-        return isGameOver;
-    }
-
-    public void onGameOver() {
-        activity.promptLevelEnd(player.getScore());
-    }
-
     public void removeBoostSprite(BoostSprite other) {
         removeQueue.add(other);
     }
 
-    void addSprite(Sprite s)
-    {
+    void addSprite(Sprite s) {
         sprites.add(s);
     }
 
-    void setPlayer(PlayerSprite p)
-    {
-        player = p;
-    }
-
-    PlayerSprite getPlayer()
-    {
-        return player;
-    }
-
-    void goDown()
-    {
-        Vec2d pos = player.getPosition();
-        if (pos.getY() < worldHeight)
-            pos.setY(pos.getY()+15);
-    }
-
-    void goUp()
-    {
-        Vec2d pos = player.getPosition();
-        if (pos.getY() > 15)
-            pos.setY(pos.getY()-15);
-    }
-
-    public GameActivity getContext()
-    {
+    public GameActivity getContext() {
         return activity;
     }
 
-    void setTiers()
-    {
-        midTier = worldHeight/2;
-        highTier = midTier + worldHeight/4;
-        lowTier = midTier - worldHeight/4;
-    }
-
-    public int getLow()
-    {
-        return lowTier;
-    }
-
-    public int getMid()
-    {
-        return midTier;
-    }
-
-    public int getHigh()
-    {
-        return highTier;
-    }
+/*
+  We're having an issue where after one or two instances of a level this becomes 0 no matter what.
+  I tried to make them static, final, static final, use the constant screen width and height in the MainActivity class... Nothing worked
+  So when we need these I either hand placed them, or used an RNG
+ */
+//    int getLow() {
+//        return lowTier;
+//    }
+//
+//    int getMid() {
+//        return midTier;
+//    }
+//
+//    int getHigh() {
+//        return highTier;
+//    }
 }

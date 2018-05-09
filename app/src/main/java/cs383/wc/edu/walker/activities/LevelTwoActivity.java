@@ -2,9 +2,8 @@ package cs383.wc.edu.walker.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.pm.ActivityInfo;
-import android.content.res.Resources;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,7 +14,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
@@ -25,22 +24,23 @@ import cs383.wc.edu.walker.game_models.SensorEventQueue;
 import cs383.wc.edu.walker.game_models.TouchEventQueue;
 import cs383.wc.edu.walker.game_models.World;
 
-public class LevelTwoActivity extends GameActivity implements SensorEventListener
-{
-
-    public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
-
+//only warnings are for textureview listener and string literal in Button.setText
+@SuppressWarnings("All")
+public class LevelTwoActivity extends GameActivity implements SensorEventListener {
 
     private TextureView textureView;
     private Thread renderLoopThread;
+    private Button exitButton;
     private Sensor mSensor;
     private SensorManager mSensorManager;
     private World world;
 
 
-    //TODO solve sample not ready issue. This may be solved already with loading screens, but for now I'm going back to MediaPlayer
+    /**
+     * solve sample not ready issue. This may be solved already with loading screens, but for now I'm going back to MediaPlayer
+     */
     //private SoundPool soundPool;
-    private MediaPlayer bulletImpact, bulletLaunch, DANGERZONE;
+    private MediaPlayer bulletImpact, bulletLaunch, EAGLE;
 
     private TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
 
@@ -100,8 +100,8 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
             return true;
         });
 
-
-
+        exitButton = findViewById(R.id.exit_button);
+        exitButton.setOnClickListener(v -> backToMenu());
 
         //make the music here and play it, we can change the music but for now you're stuck with Kenny Loggins,
 //        soundPool = new SoundPool.Builder().setMaxStreams(10).build();
@@ -117,14 +117,16 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
 //        soundPool.load(this, R.raw.danger_zone, 1);
 //        soundPool.play(R.raw.danger_zone, 1f, 1f, 1, -1, 1f);
 
-        mSensorManager = (SensorManager) getSystemService(this.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        if (mSensorManager != null) {
+            mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+        }
 
         bulletImpact = MediaPlayer.create(this, R.raw.bullet_impact);
         bulletLaunch = MediaPlayer.create(this, R.raw.bullet_launch);
-        DANGERZONE = MediaPlayer.create(this, R.raw.danger_zone);
-        DANGERZONE.setLooping(true);
-        DANGERZONE.start();
+        EAGLE = MediaPlayer.create(this, R.raw.eagle);
+        EAGLE.setLooping(true);
+        EAGLE.start();
 
         goFullScreen();
     }
@@ -154,10 +156,12 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
     }
 
 
-
     @Override
     public void promptLevelEnd(long score) {
-        runOnUiThread((this::onBackPressed));
+        runOnUiThread(() -> {
+            exitButton.setText("Points: " + score + "\nBack To Menu");
+            exitButton.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override
@@ -175,12 +179,11 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         super.onStop();
         bulletLaunch.pause();
         bulletImpact.pause();
-        DANGERZONE.pause();
+        EAGLE.pause();
     }
 
     @Override
@@ -192,18 +195,16 @@ public class LevelTwoActivity extends GameActivity implements SensorEventListene
 //            soundPool.autoResume();
         bulletLaunch.start();
         bulletImpact.start();
-        DANGERZONE.start();
+        EAGLE.start();
     }
 
     @Override
-    public void onSensorChanged(SensorEvent e)
-    {
+    public void onSensorChanged(SensorEvent e) {
         SensorEventQueue.getInstance().enqueue(e);
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy)
-    {
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 }

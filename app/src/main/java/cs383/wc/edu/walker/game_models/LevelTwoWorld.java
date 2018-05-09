@@ -2,36 +2,35 @@ package cs383.wc.edu.walker.game_models;
 
 import cs383.wc.edu.walker.activities.GameActivity;
 import cs383.wc.edu.walker.sprites.BirdSprite;
-import cs383.wc.edu.walker.sprites.PlayerSprite;
+import cs383.wc.edu.walker.sprites.BoostSprite;
 
-public class LevelTwoWorld extends World
-{
+public class LevelTwoWorld extends World {
     public LevelTwoWorld(GameActivity g) {
         super(g);
-        setPlayer(new PlayerSprite(new Vec2d(50,getMid()), this));
-        addSprite(getPlayer());
-        addSprite(new BirdSprite(new Vec2d(1900, getLow()), this));
-        addSprite(new BirdSprite(new Vec2d(2000, getLow()), this));
-        addSprite(new BirdSprite(new Vec2d(2000, getHigh()), this));
-        addSprite(new BirdSprite(new Vec2d(1800, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(2400, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(2400, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(2700, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(3000, getLow()), this));
-        addSprite(new BirdSprite(new Vec2d(3000, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(3000, getHigh()), this));
-        addSprite(new BirdSprite(new Vec2d(3400, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(3600, getLow()), this));
-        addSprite(new BirdSprite(new Vec2d(3600, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(3600, getHigh()), this));
-        addSprite(new BirdSprite(new Vec2d(3800, getMid()), this));
-        addSprite(new BirdSprite(new Vec2d(4000, getLow()), this));
-        addSprite(new BirdSprite(new Vec2d(4200, getHigh()),this));
-        addSprite(new BirdSprite(new Vec2d(4300, getHigh()),this));
-        addSprite(new BirdSprite(new Vec2d(4400, getHigh()),this));
-        addSprite(new BirdSprite(new Vec2d(4400, getLow()),this));
-        addSprite(new BirdSprite(new Vec2d(4500, getHigh()),this));
-        addSprite(new BirdSprite(new Vec2d(4600, getHigh()),this));
-        addSprite(new BirdSprite(new Vec2d(4700, getHigh()),this));
+        addSprite(new BirdSprite(new Vec2d(3900, 821), this));
+        addSprite(new BirdSprite(new Vec2d(2000, 821), this));
+        addSprite(new BirdSprite(new Vec2d(2000, 200), this));
+        addSprite(new BirdSprite(new Vec2d(1800, 500), this));
+        addSprite(new BirdSprite(new Vec2d(2400, 800), this));
+        addSprite(new BirdSprite(new Vec2d(2400, 200), this));
+        addSprite(new BirdSprite(new Vec2d(2700, 700), this));
+        addSprite(new BirdSprite(new Vec2d(3000, 900), this));
+        addSprite(new BirdSprite(new Vec2d(35000, 700), this));
+        addSprite(new BirdSprite(new Vec2d(3000, 200), this));
+        addSprite(new BirdSprite(new Vec2d(3400, 700), this));
+        addSprite(new BirdSprite(new Vec2d(3600, 900), this));
+        addSprite(new BirdSprite(new Vec2d(3600, 700), this));
+        addSprite(new BirdSprite(new Vec2d(3600, 200), this));
+        addSprite(new BirdSprite(new Vec2d(3800, 700), this));
+        addSprite(new BirdSprite(new Vec2d(4000, 900), this));
+        addSprite(new BirdSprite(new Vec2d(4200, 300), this));
+        addSprite(new BirdSprite(new Vec2d(4300, 200), this));
+        addSprite(new BirdSprite(new Vec2d(4400, 500), this));
+        addSprite(new BirdSprite(new Vec2d(4400, 821), this));
+        addSprite(new BirdSprite(new Vec2d(4500, 200), this));
+        addSprite(new BirdSprite(new Vec2d(4600, 600), this));
+        addSprite(new BirdSprite(new Vec2d(4700, 200), this));
+        addSprite(new BoostSprite(new Vec2d(2600, 289)));
+        addSprite(new BoostSprite(new Vec2d(3800, 589)));
     }
 }

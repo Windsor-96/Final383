@@ -4,9 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 import cs383.wc.edu.walker.game_models.Collision;
 import cs383.wc.edu.walker.game_models.Vec2d;
-import cs383.wc.edu.walker.bitmaps.BitmapSequence;
 
 /**
  * Created by shaffer on 4/27/16.
@@ -14,11 +14,11 @@ import cs383.wc.edu.walker.bitmaps.BitmapSequence;
  */
 public abstract class Sprite {
 
-    private BitmapSequence bitmaps;
     Vec2d position;
+    private BitmapSequence bitmaps;
 
 
-    public Sprite(Vec2d v) {
+    Sprite(Vec2d v) {
         setPosition(v);
     }
 
@@ -26,12 +26,12 @@ public abstract class Sprite {
         bitmaps = b;
     }
 
-    public void setPosition(Vec2d p) {
-        position = p;
-    }
-
     public Vec2d getPosition() {
         return position;
+    }
+
+    void setPosition(Vec2d p) {
+        position = p;
     }
 
     public void draw(Canvas c) {
@@ -42,9 +42,9 @@ public abstract class Sprite {
         bitmaps.tick(dt);
     }
 
-    public RectF getBoundingBox() {
+    private RectF getBoundingBox() {
         PointF size = bitmaps.getSize();
-        return new RectF(getPosition().getX(),getPosition().getY(),getPosition().getX()+size.x,getPosition().getY()+size.y);
+        return new RectF(getPosition().getX(), getPosition().getY(), getPosition().getX() + size.x, getPosition().getY() + size.y);
     }
 
     public boolean collidesWith(Sprite other) {

@@ -2,13 +2,12 @@ package cs383.wc.edu.walker.activities;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.pm.ActivityInfo;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -19,19 +18,17 @@ import android.widget.Button;
 
 import cs383.wc.edu.walker.R;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
+import cs383.wc.edu.walker.game_models.LevelOneWorld;
 import cs383.wc.edu.walker.game_models.RenderLoop;
 import cs383.wc.edu.walker.game_models.SensorEventQueue;
 import cs383.wc.edu.walker.game_models.TouchEventQueue;
 import cs383.wc.edu.walker.game_models.World;
-import cs383.wc.edu.walker.game_models.LevelOneWorld;
 
-public class LevelOneActivity extends GameActivity implements SensorEventListener
-{
-    public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
+
 //only warnings left are for the texture view and not using a string resource when setting button text
 @SuppressWarnings("All")
-public class LevelOneActivity extends GameActivity {
-
+public class LevelOneActivity extends GameActivity implements SensorEventListener {
+    public static final int HEIGHT = Resources.getSystem().getDisplayMetrics().heightPixels;
 
     private TextureView textureView;
     private Thread renderLoopThread;
@@ -99,6 +96,7 @@ public class LevelOneActivity extends GameActivity {
         BitmapRepo.getInstance().setContext(this);
         textureView = findViewById(R.id.texture_view);
         textureView.setSurfaceTextureListener(textureListener);
+
         textureView.setOnTouchListener((View v, MotionEvent event) -> {
             TouchEventQueue.getInstance().enqueue(event);
             return true;
@@ -167,25 +165,9 @@ public class LevelOneActivity extends GameActivity {
         });
     }
 
-    //So, the UI thread hangs when we try to go back to menu, so let's just kill everything and start again
-    //When im doubt, going nuclear seems to be what a lot of people attempt when they have a quick loading app
+
     @Override
     public void backToMenu() {
-//        Intent i = getBaseContext().getPackageManager()
-//                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
-//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        finish();
-//        startActivity(i);
-        restartApp();
-    }
-
-    private void restartApp() {
-//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//        int mPendingIntentId = 123456;
-//        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 2000, mPendingIntent);
-//        System.exit(0);
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
@@ -199,8 +181,7 @@ public class LevelOneActivity extends GameActivity {
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         super.onStop();
         bulletLaunch.pause();
         bulletImpact.pause();
@@ -219,14 +200,12 @@ public class LevelOneActivity extends GameActivity {
     }
 
     @Override
-    public void onSensorChanged(SensorEvent e)
-    {
+    public void onSensorChanged(SensorEvent e) {
         SensorEventQueue.getInstance().enqueue(e);
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy)
-    {
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 }

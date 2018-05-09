@@ -7,7 +7,7 @@ import android.graphics.PointF;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-
+@SuppressWarnings("All")
 /**
  * Created by shaffer on 4/27/16.
  */
@@ -53,7 +53,7 @@ class SequenceElement {
     Bitmap bitmap;
     double duration;
 
-    public SequenceElement(Bitmap bm, double duration) {
+    SequenceElement(Bitmap bm, double duration) {
         bitmap = bm;
         this.duration = duration;
     }

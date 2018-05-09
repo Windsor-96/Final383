@@ -3,6 +3,7 @@ package cs383.wc.edu.walker.game_models;
 import android.view.MotionEvent;
 
 import java.util.LinkedList;
+@SuppressWarnings("All")
 
 /**
  * Created by shaffer on 4/28/16.
@@ -10,17 +11,16 @@ import java.util.LinkedList;
 public class TouchEventQueue {
 
     private static TouchEventQueue defaultInstance;
+    private LinkedList<MotionEvent> events;
+
+    public TouchEventQueue() {
+        events = new LinkedList<>();
+    }
 
     public static TouchEventQueue getInstance() {
         if (defaultInstance == null)
             defaultInstance = new TouchEventQueue();
         return defaultInstance;
-    }
-
-    private LinkedList<MotionEvent> events;
-
-    public TouchEventQueue() {
-        events = new LinkedList<>();
     }
 
     public synchronized void enqueue(MotionEvent e) {

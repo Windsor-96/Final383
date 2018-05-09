@@ -3,10 +3,10 @@ package cs383.wc.edu.walker.game_models;
 import android.graphics.RectF;
 
 import cs383.wc.edu.walker.sprites.Sprite;
+@SuppressWarnings("All")
 
 /**
  * Created by shaffer on 4/28/16.
- *
  */
 public class Collision {
     private Sprite sprite1;

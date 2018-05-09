@@ -14,12 +14,12 @@ import cs383.wc.edu.walker.game_models.World;
 public class PlayerSprite extends Sprite {
 
     private static int VELOCITY = 150;
-    private static float UP_ACCELERATION = 250;
-    private static float DOWN_ACCELERATION = -250;
+    private static final Vec2d acceleration = new Vec2d(VELOCITY, 0f);
+    private static float UP_ACCELERATION = 350;
+    private static float DOWN_ACCELERATION = -350;
     private World world;
     private boolean dead;
     private BitmapSequence deadSequence;
-    private static final Vec2d acceleration = new Vec2d(VELOCITY, 0f);
     private long score;
 
     public PlayerSprite(Vec2d v, World containerWorld) {
@@ -70,7 +70,7 @@ public class PlayerSprite extends Sprite {
             //we only have one boost so we're just gonna tell the boost to remove itself, and then tell the world to boost us
             world.removeBoostSprite((BoostSprite) other);
             //Is it ridiculous to casually double the player's score? Probably
-            //But it's also straight forward and gives the player other things to do then shoot at twitter birds
+            //But it's also straight forward and gives the player other things to do then shoot at twitter birds, even as fun as that can be
             score *= 2;
         }
     }
@@ -83,10 +83,6 @@ public class PlayerSprite extends Sprite {
         dead = true;
         setBitmaps(deadSequence);
         world.onPlayerDeath();
-    }
-
-    public void addTimeSurvived(int time) {
-        score += time;
     }
 
     public float getY() {

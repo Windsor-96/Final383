@@ -3,7 +3,6 @@ package cs383.wc.edu.walker.sprites;
 import android.support.annotation.NonNull;
 
 import cs383.wc.edu.walker.R;
-import cs383.wc.edu.walker.activities.LevelOneActivity;
 import cs383.wc.edu.walker.activities.MainActivity;
 import cs383.wc.edu.walker.bitmaps.BitmapRepo;
 import cs383.wc.edu.walker.bitmaps.BitmapSequence;

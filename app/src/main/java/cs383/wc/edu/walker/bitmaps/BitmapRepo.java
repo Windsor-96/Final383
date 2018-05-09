@@ -4,20 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.LruCache;
-
+@SuppressWarnings("All")
 /**
  * Created by shaffer on 4/29/16.
  */
 public class BitmapRepo {
     private static BitmapRepo defaultInstance;
-
-    public static BitmapRepo getInstance() {
-        if (defaultInstance == null)
-            defaultInstance = new BitmapRepo();
-        return defaultInstance;
-    }
-
-
     private Context context;
     private LruCache<String, Bitmap> cache;
 
@@ -38,6 +30,12 @@ public class BitmapRepo {
                 return bitmap.getByteCount() / 1024;
             }
         };
+    }
+
+    public static BitmapRepo getInstance() {
+        if (defaultInstance == null)
+            defaultInstance = new BitmapRepo();
+        return defaultInstance;
     }
 
     public void setContext(Context c) {

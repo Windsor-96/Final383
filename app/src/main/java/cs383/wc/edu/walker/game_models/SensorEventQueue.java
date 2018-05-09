@@ -1,16 +1,20 @@
 package cs383.wc.edu.walker.game_models;
 
 import android.hardware.SensorEvent;
-import android.view.MotionEvent;
 
 import java.util.LinkedList;
 
 /**
- * TODO DOCUMENTATION
+ * Queue for motion sensor events, similar to TouchEventQueue
  */
 public class SensorEventQueue {
 
     private static SensorEventQueue defaultInstance;
+    private LinkedList<SensorEvent> events;
+
+    private SensorEventQueue() {
+        events = new LinkedList<>();
+    }
 
     public static SensorEventQueue getInstance() {
         if (defaultInstance == null)
@@ -18,17 +22,11 @@ public class SensorEventQueue {
         return defaultInstance;
     }
 
-    private LinkedList<SensorEvent> events;
-
-    public SensorEventQueue() {
-        events = new LinkedList<>();
-    }
-
     public synchronized void enqueue(SensorEvent e) {
         events.addLast(e);
     }
 
-    public synchronized SensorEvent dequeue() {
+    synchronized SensorEvent dequeue() {
         if (events.isEmpty())
             return null;
         else

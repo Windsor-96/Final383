@@ -1,6 +1,7 @@
 package cs383.wc.edu.walker.sprites;
 
 import cs383.wc.edu.walker.game_models.Vec2d;
+@SuppressWarnings("All")
 
 /**
  * Created by shaffer on 4/28/16.
@@ -12,31 +13,31 @@ public abstract class PhysicalSprite extends Sprite {
 
     private Vec2d acceleration;
 
-    public PhysicalSprite(Vec2d v) {
+    PhysicalSprite(Vec2d v) {
         super(v);
-        velocity = new Vec2d(0,0);
-        acceleration = new Vec2d(0,0);
-    }
-
-    public void setVelocity(Vec2d v) {
-        velocity = v;
+        velocity = new Vec2d(0, 0);
+        acceleration = new Vec2d(0, 0);
     }
 
     public Vec2d getVelocity() {
         return velocity;
     }
 
+    public void setVelocity(Vec2d v) {
+        velocity = v;
+    }
+
     public Vec2d getAcceleration() {
         return acceleration;
     }
 
-    public void setAcceleration(Vec2d acceleration) {
+    void setAcceleration(Vec2d acceleration) {
         this.acceleration = acceleration;
     }
 
     public void tick(double dt) {
         super.tick(dt);
-        position = position.add(velocity.times(dt)).add(acceleration.times(0.5*dt*dt));
+        position = position.add(velocity.times(dt)).add(acceleration.times(0.5 * dt * dt));
         velocity = velocity.add(acceleration.times(dt));
     }
 

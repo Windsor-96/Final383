@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         foreverButton.setOnClickListener((View view) -> {
             themeMusic.pause();
             themeMusic.release();
-            startActivity(new Intent(MainActivity.this, Forever.class));
+            startActivity(new Intent(MainActivity.this, ForeverActivity.class));
         });
     }
 

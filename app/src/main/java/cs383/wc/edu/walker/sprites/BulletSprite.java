@@ -16,8 +16,8 @@ import cs383.wc.edu.walker.game_models.World;
  */
 
 public class BulletSprite extends PhysicalSprite implements Comparable<BulletSprite> {
-    private PlayerSprite owner;
     private static final float VELOCITY = 400f;
+    private PlayerSprite owner;
     private World world;
 
     public BulletSprite(Vec2d v, PlayerSprite owner, World _world) {
