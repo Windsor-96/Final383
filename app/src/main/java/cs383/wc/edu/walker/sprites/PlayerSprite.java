@@ -15,8 +15,9 @@ public class PlayerSprite extends Sprite {
 
     private static int VELOCITY = 150;
     private static final Vec2d acceleration = new Vec2d(VELOCITY, 0f);
-    private static float UP_ACCELERATION = 350;
-    private static float DOWN_ACCELERATION = -350;
+    private static float UP_ACCELERATION = 15;
+    private static float DOWN_ACCELERATION = -15;
+    private static float LOWER_BOUND = 1000;
     private World world;
     private boolean dead;
     private BitmapSequence deadSequence;
@@ -36,7 +37,6 @@ public class PlayerSprite extends Sprite {
         BitmapSequence s = new BitmapSequence();
         s.addImage(r.getImage(R.drawable.plane), 60);
         setBitmaps(s);
-
         deadSequence = new BitmapSequence();
         deadSequence.addImage(r.getImage(R.drawable.plane_death1), 0.2);
         deadSequence.addImage(r.getImage(R.drawable.plane_death2), 0.2);
@@ -94,11 +94,13 @@ public class PlayerSprite extends Sprite {
     }
 
     public void moveUp() {
-        acceleration.setY(UP_ACCELERATION);
+        if (this.getPosition().getY() < LOWER_BOUND)
+            this.getPosition().setY(this.getY() + UP_ACCELERATION);
     }
 
     public void moveDown() {
-        acceleration.setY(DOWN_ACCELERATION);
+        if (this.getPosition().getY() > DOWN_ACCELERATION)
+            this.getPosition().setY(this.getY() + DOWN_ACCELERATION);
     }
 
     public void moveStraight() {

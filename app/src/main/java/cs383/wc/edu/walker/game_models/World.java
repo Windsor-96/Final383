@@ -53,7 +53,7 @@ public class World {
         paint = new Paint();
         paint.setColor(0xFFFFFFFF);
         paint.setTextSize(100);
-        sprites.add(player = new PlayerSprite(new Vec2d(960, 540), this));
+        sprites.add(player = new PlayerSprite(new Vec2d(0, 500), this));
         removeQueue = new ArrayList<>();
 //        midTier = MainActivity.HEIGHT / 2;
 //        highTier = midTier + MainActivity.HEIGHT / 4;
@@ -111,7 +111,7 @@ public class World {
 
     private void handleSensorEvent(SensorEvent e) {
         Log.d("Accelerometer", "x: " + e.values[0] + "y: " + e.values[1] + "z: " + e.values[2]);
-        if (Math.abs(e.values[2]) > .09) {
+        if (Math.abs(e.values[2]) > .14) {
             if (e.values[2] < 0) {
                 player.moveUp();
             } else {
@@ -200,20 +200,4 @@ public class World {
         return activity;
     }
 
-/*
-  We're having an issue where after one or two instances of a level this becomes 0 no matter what.
-  I tried to make them static, final, static final, use the constant screen width and height in the MainActivity class... Nothing worked
-  So when we need these I either hand placed them, or used an RNG
- */
-//    int getLow() {
-//        return lowTier;
-//    }
-//
-//    int getMid() {
-//        return midTier;
-//    }
-//
-//    int getHigh() {
-//        return highTier;
-//    }
 }
